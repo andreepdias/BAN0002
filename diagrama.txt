@@ -1,0 +1,48 @@
+#https://app.quickdatabasediagrams.com
+
+Usuario_Tipo as ust
+----
+id PK int
+nome varchar(50)
+descricao text
+
+Usuario as us
+----
+id PK serial
+nome varchar(200)
+tipo int FK >- ust.id
+
+Pessoa_Desaparecida as pes
+----
+id PK serial
+RG varchar(20)
+CPF UNIQUE varchar(11)
+nome varchar(100)
+ultimo_local varchar(300)
+inserido_por int FK >- us.id
+atualizado_por int FK >- us.id
+
+Apelido as ape
+---
+id PK serial
+id_pessoa int FK >- pes.id
+apelido varchar(100)
+
+Localizacao
+----
+id PK serial
+id_pessoa FK >- pes.id
+local varchar(300)
+data_hora timestamp
+#Talvez data deva ser obrigatório e hora possa ser NULL
+
+Denuncia
+----
+id PK serial
+id_usuario int FK >- us.id
+telefone varchar(50)
+local_ligacao varchar(300)
+
+
+
+
