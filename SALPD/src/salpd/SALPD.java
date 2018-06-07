@@ -1,21 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package salpd;
 
-/**
- *
- * @author andre
- */
-public class SALPD {
+import classes.Usuario_Tipos;
+import dao.Usuario_TipoDAO;
+import java.util.Scanner;
 
-    /**
-     * @param args the command line arguments
-     */
+public class SALPD {
+    
+    private static Scanner input = new Scanner(System.in);
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        System.out.println("Digite o nome e a descrição de um novo tipo de usuário:");
+        
+        System.out.println("Nome: ");
+        String nome = input.nextLine();
+        
+        System.out.println("Descricao: ");
+        String descricao = input.nextLine();
+        
+        Usuario_Tipos t = new Usuario_Tipos(nome, descricao);
+        
+        Usuario_TipoDAO u = new Usuario_TipoDAO();
+        
+        u.inserir(t);
+        
+        
+        
     }
     
 }
