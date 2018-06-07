@@ -1,6 +1,6 @@
 package salpd;
 
-import classes.Usuario_Tipos;
+import modelo.Usuario_Tipos;
 import dao.Usuario_TipoDAO;
 import java.util.Scanner;
 

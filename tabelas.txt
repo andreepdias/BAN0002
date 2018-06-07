@@ -2,7 +2,7 @@ CREATE TABLE Usuario_Tipos (id serial PRIMARY KEY, nome varchar(50), descricao t
 
 CREATE TABLE Usuarios (id serial PRIMARY KEY, nome varchar(200), tipo int, FOREIGN KEY (tipo) REFERENCES Usuario_Tipo (id));
 
-CREATE TABLE Pessoas_Desaparecidas (id serial PRIMARY KEY, RG varchar(20), nome varchar(100), ultimo_local varchar(300), inserido_por int, atualizado_por int, tipo int, FOREIGN KEY (inserido_por) REFERENCES Usuarios (id), FOREIGN KEY (atualizado_por) REFERENCES Usuarios (id));
+CREATE TABLE Pessoas_Desaparecidas (id serial PRIMARY KEY, RG varchar(20), nome varchar(100), ultimo_local varchar(300), inserido_por int, atualizado_por int, FOREIGN KEY (inserido_por) REFERENCES Usuarios (id), FOREIGN KEY (atualizado_por) REFERENCES Usuarios (id));
 
 CREATE TABLE Apelidos (id serial PRIMARY KEY, id_pessoa int, apelido varchar(100), FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id));
 

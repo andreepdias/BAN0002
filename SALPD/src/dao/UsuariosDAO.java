@@ -1,29 +1,29 @@
 package dao;
 
-import modelo.Usuario_Tipos;
+import modelo.*;
 import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class Usuario_TipoDAO {
+public class UsuariosDAO {
     
-    public void inserir(Usuario_Tipos t){
+    public void inserir(Usuarios t){
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         
         try {
-            st = c.prepareStatement("INSERT INTO Usuario_Tipos (nome, descricao) VALUES (?, ?)");
+            st = c.prepareStatement("INSERT INTO Usuarios (nome, tipo) VALUES (?, ?)");
             st.setString(1, t.getNome());
-            st.setString(2, t.getDescricao());
+            st.setInt(2, t.getTipo());
             
             st.executeUpdate();
             
-            System.out.println("Inserção bem sucedida em Usuario_Tipos.");
+            System.out.println("Inserção bem sucedida em Usuarios.");
         } catch (SQLException ex) {
-            System.out.println("Inserção mal sucedida em Usuario_Tipos.");
+            System.out.println("Inserção mal sucedida em Usuarios.");
         }finally{
             Conexao.encerrarConexao(c, st);
         }

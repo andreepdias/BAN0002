@@ -1,4 +1,4 @@
-package classes;
+package modelo;
 
 
 public class Usuario_Tipos {

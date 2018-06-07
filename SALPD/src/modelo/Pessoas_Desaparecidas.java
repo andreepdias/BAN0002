@@ -1,4 +1,4 @@
-package classes;
+package modelo;
 
 
 public class Pessoas_Desaparecidas {
@@ -9,7 +9,6 @@ public class Pessoas_Desaparecidas {
     private String ultimo_local;
     private int inserido_por;
     private int atualizado_por;
-    private int tipo;
 
     public int getId() {
         return id;
@@ -59,14 +58,7 @@ public class Pessoas_Desaparecidas {
         this.atualizado_por = atualizado_por;
     }
 
-    public int getTipo() {
-        return tipo;
-    }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
-    }
-    
     
     
 }
