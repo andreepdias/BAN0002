@@ -1,7 +1,7 @@
 package modelo;
 
 
-public class Localizacoes {
+public class Localizacao {
     
     private  int id;
     private int id_pessoa;

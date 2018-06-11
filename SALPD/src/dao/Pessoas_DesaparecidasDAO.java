@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Pessoas_DesaparecidasDAO {
 
-    public void inserir(Pessoas_Desaparecidas t){
+    public void inserir(Pessoa_Desaparecida t){
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;

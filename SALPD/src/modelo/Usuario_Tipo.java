@@ -1,13 +1,13 @@
 package modelo;
 
 
-public class Usuario_Tipos {
+public class Usuario_Tipo {
     
     private  int id;
     private String nome;
     private String descricao;
     
-    public Usuario_Tipos(String nome, String descricao){
+    public Usuario_Tipo(String nome, String descricao){
         this.nome = nome;
         this.descricao = descricao;
     }

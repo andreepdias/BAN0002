@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class LocalizacoesDAO {
 
-    public void inserir(Localizacoes t){
+    public void inserir(Localizacao t){
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;

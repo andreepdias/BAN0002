@@ -1,7 +1,7 @@
 package modelo;
 
 
-public class Apelidos {
+public class Apelido {
     
     private  int id;
     private int id_pessoa;

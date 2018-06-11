@@ -1,7 +1,7 @@
 package modelo;
 
 
-public class Denuncias {
+public class Denuncia {
     
     private  int id;
     private int id_usuario;

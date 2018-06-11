@@ -1,6 +1,6 @@
 package dao;
 
-import modelo.Usuario_Tipos;
+import modelo.Usuario_Tipo;
 import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Usuario_TipoDAO {
     
-    public void inserir(Usuario_Tipos t){
+    public void inserir(Usuario_Tipo t){
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;

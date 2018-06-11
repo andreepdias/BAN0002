@@ -1,7 +1,7 @@
 package modelo;
 
 
-public class Pessoas_Desaparecidas {
+public class Pessoa_Desaparecida {
     
     private  int id;
     private String RG;
