@@ -5,8 +5,8 @@ CREATE TABLE Usuario_Tipos (
 );
 
 CREATE TABLE Usuarios (
-	id serial UNIQUE NOT NULL,
-	login varchar(50) PRIMARY KEY,
+	id serial PRIMARY KEY,
+	login varchar(50) UNIQUE NOT NULL,
 	senha varchar(50) NOT NULL,
 	nome varchar(200) NOT NULL, 
 	tipo int NOT NULL, 
