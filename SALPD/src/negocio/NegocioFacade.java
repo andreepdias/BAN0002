@@ -7,6 +7,7 @@ package negocio;
 
 import app.Main;
 import dao.*;
+import java.util.List;
 import modelo.*;
 import util.*;
 
@@ -16,26 +17,24 @@ import util.*;
  */
 public class NegocioFacade {
     
-       public static Operacao login(String login, String senha){
-           
-           Operacao o = new Operacao();
+        public static Operacao login(String login, String senha){
            UsuariosDAO dao = new UsuariosDAO();
-           
-           Usuario u = dao.login(login, senha);
 
-           if(u == null){
+           Operacao o = new Operacao(dao.login(login, senha));
+           
+
+           if(o.getDado() == null){
                o.setSucesso(false);
                o.setMensagem("Login ou senha inválidos.");
            }else{
                o.setSucesso(true);
                o.setMensagem("Sucesso na autenticação.");
-               Main.setUsuario(u);
            }
            
            return o;
        }
        
-       public static Operacao cadastrarUsuario(String login, String senha, String nome, int tipo){
+        public static Operacao cadastrarUsuario(String login, String senha, String nome, int tipo){
            
             Operacao o = new Operacao();
             StringBuilder s = new StringBuilder();
@@ -65,7 +64,37 @@ public class NegocioFacade {
             }
             
             return o;
-           
+               
+        }
+        
+        //Um pouco de gambiarra aqui, precisaria de um jeito melhor de retornar lista de usuários
+        public static Operacao listarUsuarios(){
+            
+            UsuariosDAO dao = new UsuariosDAO();
+
+            Operacao o = new Operacao(dao.listar());
+            if(o.getDado() != null){
+                o.setSucesso(true);
+            }
+            else{
+                o.setMensagem("Erro na busca da lista de usuários.");
+            }
+            
+            return o;
        }
+        
+        public static Operacao nomeTipo(int tipo){
+            Usuario_TipoDAO dao = new Usuario_TipoDAO();
+            
+            Operacao o = new Operacao(dao.nomeTipo(tipo));
+            if(o.getDado() != ""){
+                o.setSucesso(true);
+            }
+            else{
+                o.setMensagem("Erro na busca do tipo " + tipo + ".");
+            }
+        
+            return o;
+        }
     
 }

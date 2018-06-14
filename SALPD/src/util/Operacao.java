@@ -11,12 +11,19 @@ package util;
  */
 public class Operacao {
 
-    public boolean sucesso;
-    public String mensagem;
+    private boolean sucesso;
+    private String mensagem;
+    private Object dado;
 
     public Operacao() {
         sucesso = false;
         mensagem = "";
+    }
+    
+    public Operacao(Object dado) {
+        sucesso = false;
+        mensagem = "";
+        this.dado = dado;
     }
 
     public Operacao(boolean sucesso, String mensagem) {
@@ -38,6 +45,14 @@ public class Operacao {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+    
+    public Object getDado(){
+        return dado;
+    }
+    
+    public void setDado(Object dado){
+        this.dado = dado;
     }
 
     

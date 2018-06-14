@@ -5,6 +5,7 @@
  */
 package app;
 
+import java.util.List;
 import java.util.Scanner;
 import modelo.*;
 import negocio.NegocioFacade;
@@ -40,6 +41,7 @@ public class Main {
             senha = input.nextLine();
 
             o = NegocioFacade.login(login, senha);
+            Main.setUsuario((Usuario) o.getDado());
 
             System.out.println(o.getMensagem());
             Toolbox.aguarda1s();
@@ -109,7 +111,17 @@ public class Main {
 
         o = NegocioFacade.listarUsuarios();
 
-        System.out.println(o.getMensagem());
+        if(o.isSucesso()){
+            int i = 1;
+            for(Usuario u : (List<Usuario>) o.getDado()){
+                System.out.println("Usuario " + i);
+                System.out.println("\tNome: " + u.getNome());
+                System.out.println("\tTipo: " + NegocioFacade.nomeTipo(u.getTipo()));
+            }      
+        }
+        else{
+            System.out.printf(o.getMensagem());
+        }
         Toolbox.aguarda1s();
         
     }

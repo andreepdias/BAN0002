@@ -73,15 +73,16 @@ public class UsuariosDAO {
         
     }
     
-    public List<Usuario> ler(){
+    public List<Usuario> listar(){
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
         ResultSet rs = null;
 
-        List<Usuario> usuarios = new ArrayList<>();
+        List<Usuario> usuarios = null;
         
         try{
+            usuarios = new ArrayList<>();
             st = c.prepareStatement("SELECT * FROM Usuarios");
             
             rs = st.executeQuery();
