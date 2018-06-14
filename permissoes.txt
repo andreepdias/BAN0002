@@ -37,6 +37,7 @@ descricao
 
 Pessoa_Desparecida:
 RG
+CPF
 nome
 ultimo_local
 inserido_por
