@@ -52,14 +52,14 @@ public class NegocioFacade {
 
             UsuariosDAO dao = new UsuariosDAO();
             Usuario u = new Usuario(login, senha, nome, tipo);
-                    
+            
             if(!dao.inserir(u)){
                 s.append("Login e/ou senha já existem.");
             }
             
             o.setMensagem(s.toString());
             
-            if(o.getMensagem() == null){
+            if(o.getMensagem().equals("")){
                 o.setSucesso(true);
                 o.setMensagem("Sucesso no cadastro do usuário.");
             }

@@ -1,0 +1,58 @@
+Adminsitrador:	cadastrar e remover gestores
+Gestor:		cadastrar e remover agentes e informantes
+		remover denúncias
+Agente:		cadastrar pessoa deparecida
+Informante:	adicionar denúncias
+Anônimo:	adicionar denúncias
+
+
+
+
+
+cadastrar usuario
+remover usuario
+
+cadastrar pessoas desaparecida
+remover pessoa desaparecida
+
+cadastrar denuncias
+remover denucias
+
+
+
+
+Usuario			1..1	Usuario_Tipo
+Pessoa_Desparecida	1..n	Apelido
+Denuncia		1..1	Localização
+
+Usuario:
+login
+senha
+nome
+tipo
+
+Usuario_Tipo:
+nome
+descricao
+
+Pessoa_Desparecida:
+RG
+nome
+ultimo_local
+inserido_por
+atualizado_por
+
+Apelido:
+apelido
+id_pessoa
+
+Denuncia:
+id_usuario
+telefone
+local_ligacao
+
+Localização:
+id_pessoa
+id_denuncia
+local
+data_hora

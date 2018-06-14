@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class UsuariosDAO {
@@ -17,11 +19,11 @@ public class UsuariosDAO {
         PreparedStatement st = null;
         
         try {
-            st = c.prepareStatement("INSERT INTO Usuarios (nome, tipo, login, senha) VALUES (?, ?, ?, ?)");
-            st.setString(1, t.getNome());
-            st.setInt(2, t.getTipo());
-            st.setString(3, t.getLogin());
-            st.setString(4, t.getSenha());
+            st = c.prepareStatement("INSERT INTO usuarios (login, senha, nome, tipo) VALUES (?, ?, ?, ?)");
+            st.setString(1, t.getLogin());
+            st.setString(2, t.getSenha());
+            st.setString(3, t.getNome());
+            st.setInt(4, t.getTipo());
             
             st.executeUpdate();
             
@@ -30,10 +32,9 @@ public class UsuariosDAO {
             System.out.println("Inserção bem sucedida em Usuarios.");
         } catch (SQLException ex) {
             System.out.println("Inserção mal sucedida em Usuarios.");
-        }finally{
-            Conexao.encerrarConexao(c, st);
         }
         
+        Conexao.encerrarConexao(c, st);
         return sucesso;
         
     }
@@ -72,4 +73,38 @@ public class UsuariosDAO {
         
     }
     
+    public List<Usuario> ler(){
+        
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+
+        List<Usuario> usuarios = new ArrayList<>();
+        
+        try{
+            st = c.prepareStatement("SELECT * FROM Usuarios");
+            
+            rs = st.executeQuery();
+            
+            while(rs.next()){
+                Usuario u = new Usuario();
+                u.setId(rs.getInt("id"));
+                u.setLogin(rs.getString("login"));
+                u.setSenha(rs.getString("senha"));
+                u.setNome(rs.getString("nome"));
+                u.setTipo(rs.getInt("tipo"));
+                
+                usuarios.add(u);
+            }
+            
+            System.out.println("Sucesso ao buscar na tabela Usuarios.");
+            
+        }catch(SQLException ex){
+            System.out.println("Falha ao buscar na tabela Usuarios.");
+        }
+        
+        return usuarios;
+        
+        
+    }
 }

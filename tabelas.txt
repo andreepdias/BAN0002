@@ -49,7 +49,14 @@ CREATE TABLE Denuncias (
 
 
 DROP TABLE Usuario_Tipos CASCADE;
+	DELETE * FROM Usuario_Tipos;
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (5, 'Administrador', 'Acesso irrestrito ao sistema');
+INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (4, 'Gestor', 'Gerencia o sistema');
+INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (3, 'Agente', 'Atua em campo');
+INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (2, 'Informante', 'Contribui com informações novas');
+INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (1, 'Anonimo', 'Realiza denuncias anonimamente');
+
+
 
 
 DROP TABLE Usuarios CASCADE;

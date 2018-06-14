@@ -60,6 +60,7 @@ public class Main {
             System.out.println("Menu de Administração - SALPD\n");
             System.out.println("O que você deseja realizar?");
             System.out.println("\t1 - Inserir novo usuário");
+            System.out.println("\t2 - Listar todos os usuários");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -68,6 +69,9 @@ public class Main {
             switch(opcao){
                 case 1:
                     menuInserirUsuario();
+                    break;
+                case 2:
+                    menuListarUsuarios();
                     break;
             }
             
@@ -96,6 +100,17 @@ public class Main {
             System.out.printf(o.getMensagem());
             Toolbox.aguarda1s();
         }
+    }
+    
+    private static void menuListarUsuarios(){
+        Operacao o = new Operacao();
+        
+        Toolbox.limpaTela();
+
+        o = NegocioFacade.listarUsuarios();
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda1s();
         
     }
     
