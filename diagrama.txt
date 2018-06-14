@@ -15,8 +15,8 @@ tipo int FK >- ust.id
 Pessoas_Desaparecidas as pes
 ----
 id PK serial
-RG varchar(20)
-CPF UNIQUE varchar(11)
+RG NULL varchar(20)
+CPF NULL UNIQUE varchar(11)
 nome varchar(100)
 ultimo_local varchar(300)
 inserido_por int FK >- us.id

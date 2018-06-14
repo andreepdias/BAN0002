@@ -1,5 +1,5 @@
 CREATE TABLE Usuario_Tipos (
-	id serial PRIMARY KEY,
+	id int PRIMARY KEY,
 	nome varchar(50) NOT NULL, 
 	descricao text NOT NULL
 );
@@ -15,34 +15,35 @@ CREATE TABLE Usuarios (
 
 CREATE TABLE Pessoas_Desaparecidas (
 	id serial PRIMARY KEY, 
-	RG varchar(20), 
-	nome varchar(100), 
+	RG varchar(20),
+	CPF varchar(11) UNIQUE, 
+	nome varchar(100) NOT NULL, 
 	ultimo_local varchar(300), 
-	inserido_por int, atualizado_por int, 
+	inserido_por int NOT NULL, atualizado_por int NOT NULL, 
 	FOREIGN KEY (inserido_por) REFERENCES Usuarios (id), 
 	FOREIGN KEY (atualizado_por) REFERENCES Usuarios (id)
 );
 
 CREATE TABLE Apelidos (
 	id serial PRIMARY KEY, 
-	id_pessoa int, 
-	apelido varchar(100), 
+	id_pessoa int NOT NULL, 
+	apelido varchar(100) NOT NULL, 
 	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id)
 );
 
 CREATE TABLE Localizacoes (
 	id serial PRIMARY KEY, 
-	id_pessoa int, 
-	local varchar(300), 
-	data_hora timestamp, 
+	id_pessoa int NOT NULL, 
+	local varchar(300) NOT NULL, 
+	data_hora timestamp NOT NULL, 
 	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id)
 );
 
 CREATE TABLE Denuncias (
 	id serial PRIMARY KEY, 
-	id_usuario int, 
-	telefone varchar(50), 
-	local_ligacao varchar(300), 
+	id_usuario int NOT NULL, 
+	telefone varchar(50) NOT NULL, 
+	local_ligacao varchar(300) NOT NULL, 
 	FOREIGN KEY (id_usuario) REFERENCES Usuarios (id)
 );
 
