@@ -38,14 +38,19 @@ public class Usuario_TipoDAO {
         String nome = "";
         
         try{
-            st = c.prepareStatement("SELECT nome FROM Usuario_Tipo WHERE id == ?");
-            st.setString(1, Integer.toString(tipo));
+            st = c.prepareStatement("SELECT nome FROM Usuario_Tipos WHERE id = " + tipo);
             
             rs = st.executeQuery();
-            nome = rs.getString("nome");
+            if(rs.next()){
+                nome = rs.getString("nome");
+            }    
             
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Erro ao buscar o tipo " + tipo + ".");
+        }
+        finally{
+            Conexao.encerrarConexao(c, st);
         }
         
         return nome;

@@ -68,6 +68,8 @@ public class UsuariosDAO {
             System.out.println("Falha ao buscar na tabela Usuarios.");
         }
         
+        Conexao.encerrarConexao(c, st);
+        
         return u;
         
         

@@ -44,10 +44,9 @@ public class Main {
             Main.setUsuario((Usuario) o.getDado());
 
             System.out.println(o.getMensagem());
-            Toolbox.aguarda1s();
+          //  Toolbox.aguarda1s();
         }
-        
-        switch(usuario.getTipo()){
+            switch(usuario.getTipo()){
             case 5:
                 menuAdministrador();
                 break;
@@ -114,9 +113,11 @@ public class Main {
         if(o.isSucesso()){
             int i = 1;
             for(Usuario u : (List<Usuario>) o.getDado()){
+                String nomeTipo = (String) NegocioFacade.nomeTipo(u.getTipo()).getDado();
                 System.out.println("Usuario " + i);
                 System.out.println("\tNome: " + u.getNome());
-                System.out.println("\tTipo: " + NegocioFacade.nomeTipo(u.getTipo()));
+                System.out.println("\tTipo: " +  nomeTipo);
+                i++;
             }      
         }
         else{
