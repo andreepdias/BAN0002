@@ -5,14 +5,16 @@ import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import util.Operacao;
 
 
 public class Pessoas_DesaparecidasDAO {
 
-    public void inserir(Pessoa_Desaparecida t){
+    public Operacao inserir(Pessoa_Desaparecida t){
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
+        Operacao o = new Operacao();
 
         try {
             st = c.prepareStatement("INSERT INTO Pessoas_Desaparecidas (RG, nome, ultimo_local, inserido_por, atualizado_por) VALUES (?, ?, ?, ?, ?)");
@@ -24,13 +26,15 @@ public class Pessoas_DesaparecidasDAO {
 
             st.executeUpdate();
 
-            System.out.println("Inserção bem sucedida em Pessoas_Desaparecidas.");
+            o.setSucesso(true);
+            
         } catch (SQLException ex) {
-            System.out.println("Inserção mal sucedida em Pessoas_Desaparecidas.");
+            o.addMensagem("Inserção mal sucedida em Pessoas_Desaparecidas.");
         }finally{
             Conexao.encerrarConexao(c, st);
         }
 
+        return o;
     }
 
 }

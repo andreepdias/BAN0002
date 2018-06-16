@@ -12,23 +12,30 @@ package util;
 public class Operacao {
 
     private boolean sucesso;
-    private String mensagem;
+    private StringBuilder mensagem;
     private Object dado;
 
     public Operacao() {
         sucesso = false;
-        mensagem = "";
+        mensagem = new StringBuilder();
     }
     
     public Operacao(Object dado) {
         sucesso = false;
-        mensagem = "";
+        mensagem = new StringBuilder();
         this.dado = dado;
     }
 
     public Operacao(boolean sucesso, String mensagem) {
         this.sucesso = sucesso;
-        this.mensagem = mensagem;
+        this.mensagem = new StringBuilder();
+        this.mensagem.append(mensagem);
+    }
+    
+    //Se precisarmos juntar as mensagens de duas operações
+    public void union(Operacao o){
+        this.sucesso = this.sucesso && o.isSucesso();
+        this.mensagem.append(o.getMensagem());
     }
 
     public boolean isSucesso() {
@@ -40,11 +47,11 @@ public class Operacao {
     }
 
     public String getMensagem() {
-        return mensagem;
+        return mensagem.toString();
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
+    public void addMensagem(String mensagem) {
+        this.mensagem.append(mensagem);
     }
     
     public Object getDado(){

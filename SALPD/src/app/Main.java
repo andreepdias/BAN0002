@@ -84,23 +84,21 @@ public class Main {
         int tipo;
         Operacao o = new Operacao();
         
-        while(!o.isSucesso()){
-            Toolbox.limpaTela();
-            System.out.println("Cadastro de novo usuário:\n");
-            System.out.printf("Login: ");
-            login = input.nextLine();
-            System.out.printf("Senha: ");
-            senha = input.nextLine();
-            System.out.printf("Nome: ");
-            nome = input.nextLine();
-            System.out.printf("Tipo: ");
-            tipo = Integer.parseInt(input.nextLine());
-            
-            o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
-            
-            System.out.printf(o.getMensagem());
-            Toolbox.aguarda1s();
-        }
+        Toolbox.limpaTela();
+        System.out.println("Cadastro de novo usuário:\n");
+        System.out.printf("Login: ");
+        login = input.nextLine();
+        System.out.printf("Senha: ");
+        senha = input.nextLine();
+        System.out.printf("Nome: ");
+        nome = input.nextLine();
+        System.out.printf("Tipo: ");
+        tipo = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
+
+        System.out.printf(o.getMensagem());
+        //Toolbox.aguarda1s();
     }
     
     private static void menuListarUsuarios(){
@@ -123,7 +121,7 @@ public class Main {
         else{
             System.out.printf(o.getMensagem());
         }
-        Toolbox.aguarda1s();
+       // Toolbox.aguarda1s();
         
     }
     

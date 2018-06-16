@@ -5,6 +5,7 @@ import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import util.Operacao;
 
 
 public class LocalizacoesDAO {
@@ -13,6 +14,7 @@ public class LocalizacoesDAO {
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
+        Operacao o = new Operacao();
 
         try {
             st = c.prepareStatement("INSERT INTO Localizacoes (id_pessoa, local, data_hora) VALUES (?, ?, ?)");
@@ -22,9 +24,10 @@ public class LocalizacoesDAO {
 
             st.executeUpdate();
 
-            System.out.println("Inserção bem sucedida em Localizacoes.");
+            o.setSucesso(true);
+            
         } catch (SQLException ex) {
-            System.out.println("Inserção mal sucedida em Localizacoes.");
+            o.addMensagem("Inserção mal sucedida em Localizacoes.");
         }finally{
             Conexao.encerrarConexao(c, st);
         }

@@ -5,6 +5,7 @@ import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import util.Operacao;
 
 
 public class ApelidosDAO {
@@ -13,6 +14,7 @@ public class ApelidosDAO {
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
+        Operacao o = new Operacao();
         
         try {
             st = c.prepareStatement("INSERT INTO Apelidos (id_pessoa, apelido) VALUES (?, ?)");
@@ -21,9 +23,10 @@ public class ApelidosDAO {
             
             st.executeUpdate();
             
-            System.out.println("Inserção bem sucedida em Apelidos.");
+            o.setSucesso(true);
+
         } catch (SQLException ex) {
-            System.out.println("Inserção mal sucedida em Apelidos.");
+            o.addMensagem("Inserção mal sucedida em Apelidos.");
         }finally{
             Conexao.encerrarConexao(c, st);
         }

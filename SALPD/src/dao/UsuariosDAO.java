@@ -8,13 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import util.Operacao;
 
 
 public class UsuariosDAO {
     
-    public boolean inserir(Usuario t){
+    public Operacao inserir(Usuario t){
         
-        boolean sucesso = false;
+        Operacao o = new Operacao();
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         
@@ -27,24 +28,25 @@ public class UsuariosDAO {
             
             st.executeUpdate();
             
-            sucesso = true;
-            
-            System.out.println("Inserção bem sucedida em Usuarios.");
+            o.setSucesso(true);
+
         } catch (SQLException ex) {
-            System.out.println("Inserção mal sucedida em Usuarios.");
+            o.addMensagem("Login já existente.\n");
         }
         
         Conexao.encerrarConexao(c, st);
-        return sucesso;
+        
+        return o;
         
     }
     
-    public Usuario login(String login, String senha){
+    public Operacao login(String login, String senha){
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
         ResultSet rs = null;
-        Usuario u = null;
+        Operacao o = new Operacao();
+        Usuario u = new Usuario();
         
         try{
             st = c.prepareStatement("SELECT * FROM Usuarios WHERE login = ? AND senha = ?");
@@ -60,27 +62,29 @@ public class UsuariosDAO {
                 u.setSenha(rs.getString("senha"));
                 u.setNome(rs.getString("nome"));
                 u.setTipo(rs.getInt("tipo"));
+                o.setDado(u);    
             }
             
-            System.out.println("Sucesso ao buscar na tabela Usuarios.");
-            
+            o.setSucesso(true);
+                  
         }catch(SQLException ex){
-            System.out.println("Falha ao buscar na tabela Usuarios.");
+            o.addMensagem("Falha ao buscar na tabela Usuários.\n");
         }
         
         Conexao.encerrarConexao(c, st);
         
-        return u;
+        return o;
         
         
     }
     
-    public List<Usuario> listar(){
+    public Operacao listar(){
         
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
         ResultSet rs = null;
 
+        Operacao o = new Operacao();
         List<Usuario> usuarios = null;
         
         try{
@@ -100,13 +104,15 @@ public class UsuariosDAO {
                 usuarios.add(u);
             }
             
-            System.out.println("Sucesso ao buscar na tabela Usuarios.");
-            
+           
+            o.setDado(usuarios);
+            o.setSucesso(true);
+                        
         }catch(SQLException ex){
-            System.out.println("Falha ao buscar na tabela Usuarios.");
+            o.addMensagem("Falha ao buscar na tabela Usuarios.");
         }
         
-        return usuarios;
+        return o;
         
         
     }

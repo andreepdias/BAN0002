@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import util.Operacao;
 
 
 public class Usuario_TipoDAO {
@@ -31,10 +32,13 @@ public class Usuario_TipoDAO {
         }
     }
     
-    public String nomeTipo(int tipo){
+    //Talvez essa função seja dispensável
+    public Operacao nomeTipo(int tipo){
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         ResultSet rs = null;
+        
+        Operacao o = new Operacao();
         String nome = "";
         
         try{
@@ -43,17 +47,19 @@ public class Usuario_TipoDAO {
             rs = st.executeQuery();
             if(rs.next()){
                 nome = rs.getString("nome");
-            }    
+                o.setDado(nome);
+            }
+
+            o.setSucesso(true);
             
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.out.println("Erro ao buscar o tipo " + tipo + ".");
+            o.addMensagem("Erro ao buscar o tipo " + tipo + ".\n");
         }
         finally{
             Conexao.encerrarConexao(c, st);
         }
         
-        return nome;
+        return o;
     }
  } 
 
