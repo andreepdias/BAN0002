@@ -174,7 +174,28 @@ public class Main {
 
         o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg);
 
-        System.out.printf(o.getMensagem());
+        System.out.println(o.getMensagem());
+        
+        if(o.isSucesso()){
+            int opcao = 0;
+            String apelido;
+            Operacao o2;
+            
+            System.out.println("Essa pessoa possui algum apelido? (1 - sim, 2 - nao)\n");
+            System.out.printf("$: ");
+            
+            do{
+                opcao = Integer.parseInt(input.nextLine());
+                
+                if(opcao == 1){
+                    System.out.printf("Apelido: ");
+                    apelido = input.nextLine();
+                    o2 = NegocioFacade.cadastrarApelido(id, apelido);
+                }
+                
+            }while(opcao != 2);
+        }
+        
         Toolbox.aguarda();
     }
     private static void menuRemoverPessoaDesparecida(){
@@ -264,7 +285,6 @@ public class Main {
     public static Usuario getUsuario() {
         return usuario;
     }
-    
     public static void setUsuario(Usuario u){
         usuario = u;
     }

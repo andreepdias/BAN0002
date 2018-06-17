@@ -133,6 +133,49 @@ public class NegocioFacade {
             
             return o;
        }
+        
+        public static Operacao cadastrarApelido(int id, String apelido){
+           
+            Operacao o = new Operacao();
+            boolean valido = true;
+            
+            if(!Toolbox.verificaLetras(apelido)){
+                o.addMensagem("O apelido precisa conter apenas letras.\n");
+                valido = false;
+            }
+//            if(!Toolbox.verificaNumeros(nome, 7)){
+//                o.addMensagem("O RG precisa conter apenas numeros (7).\n");
+//                valido = false;
+//            }
+            
+            if(!valido){
+                return o;
+            }
+                
+            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
+            Pessoa_Desaparecida p = new Pessoa_Desaparecida(nome, rg);
+            
+            o = dao.inserir(p);
+            
+            return o;
+               
+        }
+        public static Operacao removerPessoaDesaparecida(int id){
+            Operacao o;            
+            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();            
+            o = dao.remover(id);
+            
+            return o;
+               
+        }
+        public static Operacao listarPessoasDesaparecidas(){
+            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
+            Operacao o = dao.listar();
+            
+            return o;
+       }
+        
+        
     
         public static Operacao cadastrarDenuncia(String telefone, String local, int id){
            
