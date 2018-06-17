@@ -44,7 +44,7 @@ public class Main {
             Main.setUsuario((Usuario) o.getDado());
 
             System.out.println(o.getMensagem());
-          //  Toolbox.aguarda1s();
+          //  Toolbox.aguarda();
         }
         switch(usuario.getTipo()){
             case 5:
@@ -66,6 +66,9 @@ public class Main {
             System.out.println("\t4 - Cadastrar pessoa desaparecida");
             System.out.println("\t5 - Listar pessoas desaparecidas");
             System.out.println("\t6 - Remover pessoas desaparecidas\n");
+            System.out.println("\t7 - Cadastrar denúncia");
+            System.out.println("\t8 - Listar denúncias");
+            System.out.println("\t9 - Remover denúncia\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -89,6 +92,15 @@ public class Main {
                     break;
                 case 6:
                     menuRemoverPessoaDesparecida();
+                    break;
+                case 7:
+                    menuInserirDenuncia();
+                    break;
+                case 8:
+                    menuListarDenuncias();
+                    break;
+                case 9:
+                    menuRemoverDenuncia();
                     break;
             }
             
@@ -114,7 +126,7 @@ public class Main {
         o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
 
         System.out.printf(o.getMensagem());
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
     }
     private static void menuRemoverUsuario(){
         String login;
@@ -128,7 +140,7 @@ public class Main {
         o = NegocioFacade.removerUsuario(login);
 
         System.out.println(o.getMensagem());
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
     }
     private static void menuListarUsuarios(){
         Operacao o;
@@ -146,7 +158,7 @@ public class Main {
                 System.out.println(u.getId() + "\t-\t" + u.getNome() + "\t-\t" + u.getTipo());
             }      
         }
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
     }
     
     private static void menuInserirPessoaDesparecida(){
@@ -163,7 +175,7 @@ public class Main {
         o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg);
 
         System.out.printf(o.getMensagem());
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
     }
     private static void menuRemoverPessoaDesparecida(){
         int id;
@@ -177,9 +189,8 @@ public class Main {
         o = NegocioFacade.removerPessoaDesaparecida(id);
 
         System.out.println(o.getMensagem());
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
     }
-    
     private static void menuListarPessoasDesparecidas(){
         Operacao o;
         
@@ -197,7 +208,61 @@ public class Main {
 //                System.out.println("Atualizado por: " + p.getAtualizado_por());
             }      
         }
-        Toolbox.aguarda1s();
+        Toolbox.aguarda();
+    }
+    
+    private static void menuInserirDenuncia(){
+        String telefone, local;
+        int id_usuario;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Cadastro de nova denúncia:\n");
+        System.out.printf("Telefone: ");
+        telefone = input.nextLine();
+        System.out.printf("Local: ");
+        local = input.nextLine();
+
+        o = NegocioFacade.cadastrarDenuncia(telefone, local, getUsuario().getId());
+
+        System.out.printf(o.getMensagem());
+        Toolbox.aguarda();
+    }
+    private static void menuRemoverDenuncia(){
+        int id;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Remoção de denúncia:\n");
+        System.out.printf("Id: ");
+        id = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.removerDenuncia(id);
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda();
+    }
+    private static void menuListarDenuncias(){
+        Operacao o;
+        
+        Toolbox.limpaTela();
+
+        o = NegocioFacade.listarDenuncias();
+        System.out.printf(o.getMensagem());
+
+        if(o.isSucesso()){
+            System.out.println("Lista de Denúncias:\n");
+            System.out.println("Id\t-\tTelefone\t-\tLocal");
+            for(Denuncia d : (List<Denuncia>) o.getDado()){
+                System.out.println(d.getId() + "\t-\t" + d.getTelefone() + "\t-\t" + d.getLocal_ligacao());
+//                System.out.println("Inserido por: " + d.getId_usuario());
+            }      
+        }
+        Toolbox.aguarda();
+    }
+
+    public static Usuario getUsuario() {
+        return usuario;
     }
     
     public static void setUsuario(Usuario u){

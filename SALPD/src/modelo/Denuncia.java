@@ -8,6 +8,15 @@ public class Denuncia {
     private String telefone;
     private String local_ligacao;
 
+    public Denuncia() {
+    }
+
+    public Denuncia(int id_usuario, String telefone, String local_ligacao) {
+        this.id_usuario = id_usuario;
+        this.telefone = telefone;
+        this.local_ligacao = local_ligacao;
+    }
+
     public int getId() {
         return id;
     }

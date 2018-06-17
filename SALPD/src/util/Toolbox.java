@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Toolbox {
     
-    public static void aguarda1s(){
+    public static void aguarda(){
 //        try { Thread.sleep (3000); } catch (InterruptedException ex) {};
         
         System.out.println("\n(pressione enter para continuar)");

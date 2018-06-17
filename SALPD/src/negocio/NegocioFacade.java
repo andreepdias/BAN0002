@@ -73,7 +73,6 @@ public class NegocioFacade {
             return o;
                
         }
-        
         public static Operacao listarUsuarios(){
             UsuariosDAO dao = new UsuariosDAO();
             Operacao o = dao.listar();
@@ -128,9 +127,49 @@ public class NegocioFacade {
             return o;
                
         }
-        
         public static Operacao listarPessoasDesaparecidas(){
             Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
+            Operacao o = dao.listar();
+            
+            return o;
+       }
+    
+        public static Operacao cadastrarDenuncia(String telefone, String local, int id){
+           
+            Operacao o = new Operacao();
+            boolean valido = true;
+            
+//            if(!Toolbox.verificaLetrasENumeros(local)){
+//                o.addMensagem("O local precisa conter apenas letras e números.\n");
+//                valido = false;
+//            }
+//            if(!Toolbox.verificaNumeros(telefone, 9)){
+//                o.addMensagem("O telefone precisa conter apenas numeros (9).\n");
+//                valido = false;
+//            }
+            
+            if(!valido){
+                return o;
+            }
+                
+            DenunciasDAO dao = new DenunciasDAO();
+            Denuncia d = new Denuncia(id, telefone, local);
+            
+            o = dao.inserir(d);
+            
+            return o;
+               
+        }
+        public static Operacao removerDenuncia(int id){
+            Operacao o;            
+            DenunciasDAO dao = new DenunciasDAO();            
+            o = dao.remover(id);
+            
+            return o;
+               
+        }
+        public static Operacao listarDenuncias(){
+            DenunciasDAO dao = new DenunciasDAO();
             Operacao o = dao.listar();
             
             return o;
