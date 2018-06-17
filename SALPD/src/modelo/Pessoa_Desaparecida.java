@@ -6,10 +6,19 @@ public class Pessoa_Desaparecida {
     private  int id;
     private String RG;
     private String nome;
-    private String ultimo_local;
+    private int ultimo_local;
     private int inserido_por;
     private int atualizado_por;
 
+    public Pessoa_Desaparecida() {
+    }
+
+    public Pessoa_Desaparecida(String nome, String RG) {
+        this.RG = RG;
+        this.nome = nome;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -34,11 +43,11 @@ public class Pessoa_Desaparecida {
         this.nome = nome;
     }
 
-    public String getUltimo_local() {
+    public int getUltimo_local() {
         return ultimo_local;
     }
 
-    public void setUltimo_local(String ultimo_local) {
+    public void setUltimo_local(int ultimo_local) {
         this.ultimo_local = ultimo_local;
     }
 

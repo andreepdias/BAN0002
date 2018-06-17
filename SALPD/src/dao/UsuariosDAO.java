@@ -29,9 +29,33 @@ public class UsuariosDAO {
             st.executeUpdate();
             
             o.setSucesso(true);
-
+            o.addMensagem("Sucesso ao inserir novo usuário.");
         } catch (SQLException ex) {
             o.addMensagem("Login já existente.\n");
+        }
+        
+        Conexao.encerrarConexao(c, st);
+        
+        return o;
+        
+    }
+    
+    public Operacao remover(String login){
+        
+        Operacao o = new Operacao();
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null;
+        
+        try {
+            st = c.prepareStatement("DELETE FROM usuarios WHERE login = ?");
+            st.setString(1, login);
+            
+            st.executeUpdate();
+            o.addMensagem("Sucesso ao remover usuário.\n");
+            
+            o.setSucesso(true);
+        } catch (SQLException ex) {
+            o.addMensagem("Usuário não encontrado.\n");
         }
         
         Conexao.encerrarConexao(c, st);
@@ -79,7 +103,6 @@ public class UsuariosDAO {
     }
     
     public Operacao listar(){
-        
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
         ResultSet rs = null;
@@ -103,17 +126,12 @@ public class UsuariosDAO {
                 
                 usuarios.add(u);
             }
-            
-           
             o.setDado(usuarios);
             o.setSucesso(true);
                         
         }catch(SQLException ex){
             o.addMensagem("Falha ao buscar na tabela Usuarios.");
         }
-        
         return o;
-        
-        
     }
 }

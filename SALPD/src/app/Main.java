@@ -37,7 +37,7 @@ public class Main {
             System.out.println("\nÁrea de Login:\n");
             System.out.print("Usuário:\t");
             login = input.nextLine(); 
-            System.out.print("Senha:\t");
+            System.out.print("Senha:\t\t");
             senha = input.nextLine();
 
             o = NegocioFacade.login(login, senha);
@@ -46,7 +46,7 @@ public class Main {
             System.out.println(o.getMensagem());
           //  Toolbox.aguarda1s();
         }
-            switch(usuario.getTipo()){
+        switch(usuario.getTipo()){
             case 5:
                 menuAdministrador();
                 break;
@@ -62,6 +62,10 @@ public class Main {
             System.out.println("O que você deseja realizar?");
             System.out.println("\t1 - Inserir novo usuário");
             System.out.println("\t2 - Listar todos os usuários");
+            System.out.println("\t3 - Remover um usuário\n");
+            System.out.println("\t4 - Cadastrar pessoa desaparecida");
+            System.out.println("\t5 - Listar pessoas desaparecidas");
+            System.out.println("\t6 - Remover pessoas desaparecidas\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -74,6 +78,18 @@ public class Main {
                 case 2:
                     menuListarUsuarios();
                     break;
+                case 3:
+                    menuRemoverUsuario();
+                    break;
+                case 4:
+                    menuInserirPessoaDesparecida();
+                    break;
+                case 5:
+                    menuListarPessoasDesparecidas();
+                    break;
+                case 6:
+                    menuRemoverPessoaDesparecida();
+                    break;
             }
             
         }while(opcao != 0);
@@ -82,7 +98,7 @@ public class Main {
     private static void menuInserirUsuario(){
         String login, senha, nome;
         int tipo;
-        Operacao o = new Operacao();
+        Operacao o;
         
         Toolbox.limpaTela();
         System.out.println("Cadastro de novo usuário:\n");
@@ -98,31 +114,90 @@ public class Main {
         o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
 
         System.out.printf(o.getMensagem());
-        //Toolbox.aguarda1s();
+        Toolbox.aguarda1s();
     }
-    
+    private static void menuRemoverUsuario(){
+        String login;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Remoção de usuário:\n");
+        System.out.printf("Login: ");
+        login = input.nextLine();
+
+        o = NegocioFacade.removerUsuario(login);
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda1s();
+    }
     private static void menuListarUsuarios(){
-        Operacao o = new Operacao();
+        Operacao o;
         
         Toolbox.limpaTela();
 
         o = NegocioFacade.listarUsuarios();
+        System.out.printf(o.getMensagem());
 
         if(o.isSucesso()){
-            int i = 1;
+            System.out.println("Lista de usuários:\n");
+            System.out.println("Id\t-\tNome\t-\tTipo");
             for(Usuario u : (List<Usuario>) o.getDado()){
-                String nomeTipo = (String) NegocioFacade.nomeTipo(u.getTipo()).getDado();
-                System.out.println("Usuario " + i);
-                System.out.println("\tNome: " + u.getNome());
-                System.out.println("\tTipo: " +  nomeTipo);
-                i++;
+//                String nomeTipo = (String) NegocioFacade.nomeTipo(u.getTipo()).getDado();
+                System.out.println(u.getId() + "\t-\t" + u.getNome() + "\t-\t" + u.getTipo());
             }      
         }
-        else{
-            System.out.printf(o.getMensagem());
-        }
-       // Toolbox.aguarda1s();
+        Toolbox.aguarda1s();
+    }
+    
+    private static void menuInserirPessoaDesparecida(){
+        String nome, rg;
+        Operacao o;
         
+        Toolbox.limpaTela();
+        System.out.println("Cadastro de nova pessao desaparecida:\n");
+        System.out.printf("Nome: ");
+        nome = input.nextLine();
+        System.out.printf("RG: ");
+        rg = input.nextLine();
+
+        o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg);
+
+        System.out.printf(o.getMensagem());
+        Toolbox.aguarda1s();
+    }
+    private static void menuRemoverPessoaDesparecida(){
+        int id;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Remoção de pessoa desaparecida:\n");
+        System.out.printf("Id: ");
+        id = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.removerPessoaDesaparecida(id);
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda1s();
+    }
+    
+    private static void menuListarPessoasDesparecidas(){
+        Operacao o;
+        
+        Toolbox.limpaTela();
+
+        o = NegocioFacade.listarPessoasDesaparecidas();
+        System.out.printf(o.getMensagem());
+
+        if(o.isSucesso()){
+            System.out.println("Lista de Pessoas Desaparecidas:\n");
+            System.out.println("Id\t-\tNome\t-\tRG");
+            for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
+                System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getRG());
+//                System.out.println("Inserido por: " + p.getInserido_por());
+//                System.out.println("Atualizado por: " + p.getAtualizado_por());
+            }      
+        }
+        Toolbox.aguarda1s();
     }
     
     public static void setUsuario(Usuario u){

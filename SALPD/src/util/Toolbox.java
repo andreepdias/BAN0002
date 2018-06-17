@@ -16,6 +16,7 @@ public class Toolbox {
     public static void aguarda1s(){
 //        try { Thread.sleep (3000); } catch (InterruptedException ex) {};
         
+        System.out.println("\n(pressione enter para continuar)");
         Scanner input = new Scanner(System.in);
         String i = input.nextLine();
     }
