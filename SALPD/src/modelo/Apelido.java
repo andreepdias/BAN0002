@@ -7,6 +7,14 @@ public class Apelido {
     private int id_pessoa;
     private String apelido;
 
+    public Apelido() {
+    }
+
+    public Apelido(int id_pessoa, String apelido) {
+        this.id_pessoa = id_pessoa;
+        this.apelido = apelido;
+    }
+
     public int getId() {
         return id;
     }

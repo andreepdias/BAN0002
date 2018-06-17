@@ -69,25 +69,24 @@ public class ApelidosDAO {
         
         try{
             apelidos = new ArrayList<>();
-            st = c.prepareStatement("SELECT * FROM denuncias WHERE id_pessoa = ?");
+            st = c.prepareStatement("SELECT * FROM Apelidos WHERE id_pessoa = ?");
             st.setInt(1, id_pessoa);
             
             rs = st.executeQuery();
             
             while(rs.next()){
                 Apelido a = new Apelido();
-                d.setId(rs.getInt("id"));
-                d.setId_usuario(rs.getInt("id_usuario"));
-                d.setTelefone(rs.getString("telefone"));
-                d.setLocal_ligacao(rs.getString("local_ligacao"));
+                a.setId(rs.getInt("id"));
+                a.setId_pessoa(rs.getInt("id_pessoa"));
+                a.setApelido(rs.getString("apelido"));
                 
-                denuncias.add(d);
+                apelidos.add(a);
             }
-            o.setDado(denuncias);
+            o.setDado(apelidos);
             o.setSucesso(true);
                         
         }catch(SQLException ex){
-            o.addMensagem("Falha ao buscar na tabela Denuncias.\n");
+            o.addMensagem("Falha ao buscar na tabela Apelidos.\n");
         }
         return o;
     }

@@ -66,9 +66,12 @@ public class Main {
             System.out.println("\t4 - Cadastrar pessoa desaparecida");
             System.out.println("\t5 - Listar pessoas desaparecidas");
             System.out.println("\t6 - Remover pessoas desaparecidas\n");
-            System.out.println("\t7 - Cadastrar denúncia");
-            System.out.println("\t8 - Listar denúncias");
-            System.out.println("\t9 - Remover denúncia\n");
+            System.out.println("\t7 - Cadastrar apelido");
+            System.out.println("\t8 - Listar apelidos");
+            System.out.println("\t9 - Remover apelido\n");
+            System.out.println("\t10 - Cadastrar denúncia");
+            System.out.println("\t11 - Listar denúncias");
+            System.out.println("\t12 - Remover denúncia\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -94,12 +97,21 @@ public class Main {
                     menuRemoverPessoaDesparecida();
                     break;
                 case 7:
-                    menuInserirDenuncia();
+                    menuInserirApelido();
                     break;
                 case 8:
-                    menuListarDenuncias();
+                    menuListarApelidos();
                     break;
                 case 9:
+                    menuRemoverApelido();
+                    break;
+                case 10:
+                    menuInserirDenuncia();
+                    break;
+                case 11:
+                    menuListarDenuncias();
+                    break;
+                case 12:
                     menuRemoverDenuncia();
                     break;
             }
@@ -166,7 +178,7 @@ public class Main {
         Operacao o;
         
         Toolbox.limpaTela();
-        System.out.println("Cadastro de nova pessao desaparecida:\n");
+        System.out.println("Cadastro de nova pessoa desaparecida:\n");
         System.out.printf("Nome: ");
         nome = input.nextLine();
         System.out.printf("RG: ");
@@ -175,27 +187,6 @@ public class Main {
         o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg);
 
         System.out.println(o.getMensagem());
-        
-        if(o.isSucesso()){
-            int opcao = 0;
-            String apelido;
-            Operacao o2;
-            
-            System.out.println("Essa pessoa possui algum apelido? (1 - sim, 2 - nao)\n");
-            System.out.printf("$: ");
-            
-            do{
-                opcao = Integer.parseInt(input.nextLine());
-                
-                if(opcao == 1){
-                    System.out.printf("Apelido: ");
-                    apelido = input.nextLine();
-                    o2 = NegocioFacade.cadastrarApelido(id, apelido);
-                }
-                
-            }while(opcao != 2);
-        }
-        
         Toolbox.aguarda();
     }
     private static void menuRemoverPessoaDesparecida(){
@@ -231,6 +222,61 @@ public class Main {
         }
         Toolbox.aguarda();
     }
+    
+    private static void menuInserirApelido(){
+        
+        String apelido;
+        int id_pessoa;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Cadastro de um apelido para uma pessoa desaparecida:\n");
+        System.out.printf("Apelido: ");
+        apelido = input.nextLine();
+        System.out.printf("id_pessoa: ");
+        id_pessoa = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.cadastrarApelido(id_pessoa, apelido);
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda();
+    }
+    private static void menuRemoverApelido(){
+        int id;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Remoção de apelido:\n");
+        System.out.printf("Id: ");
+        id = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.removerApelido(id);
+
+        System.out.println(o.getMensagem());
+        Toolbox.aguarda();
+    }
+    private static void menuListarApelidos(){
+        Operacao o;
+        int id_pessoa;
+        
+        Toolbox.limpaTela();
+        System.out.println("Lista de apelidos de uma pessoa desaparecida:\n");
+        System.out.printf("ID da pessoa des.: ");
+        id_pessoa = Integer.parseInt(input.nextLine());
+
+        o = NegocioFacade.listarApelidos(id_pessoa);
+        System.out.println(o.getMensagem());
+
+        if(o.isSucesso()){
+            System.out.println("Lista de Apelidos:\n");
+            System.out.println("Id\t-\tApelido");
+            for(Apelido a : (List<Apelido>) o.getDado()){
+                System.out.println(a.getId() + "\t-\t" + a.getApelido());
+            }      
+        }
+        Toolbox.aguarda();
+    }
+    
     
     private static void menuInserirDenuncia(){
         String telefone, local;

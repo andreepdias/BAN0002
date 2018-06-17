@@ -134,7 +134,7 @@ public class NegocioFacade {
             return o;
        }
         
-        public static Operacao cadastrarApelido(int id, String apelido){
+        public static Operacao cadastrarApelido(int id_pessoa, String apelido){
            
             Operacao o = new Operacao();
             boolean valido = true;
@@ -152,25 +152,25 @@ public class NegocioFacade {
                 return o;
             }
                 
-            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
-            Pessoa_Desaparecida p = new Pessoa_Desaparecida(nome, rg);
+            ApelidosDAO dao = new ApelidosDAO();
+            Apelido a = new Apelido(id_pessoa, apelido);
             
-            o = dao.inserir(p);
+            o = dao.inserir(a);
             
             return o;
                
         }
-        public static Operacao removerPessoaDesaparecida(int id){
+        public static Operacao removerApelido(int id){
             Operacao o;            
-            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();            
+            ApelidosDAO dao = new ApelidosDAO();            
             o = dao.remover(id);
             
             return o;
                
         }
-        public static Operacao listarPessoasDesaparecidas(){
-            Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
-            Operacao o = dao.listar();
+        public static Operacao listarApelidos(int id_pessoa){
+            ApelidosDAO dao = new ApelidosDAO();
+            Operacao o = dao.listar(id_pessoa);
             
             return o;
        }
