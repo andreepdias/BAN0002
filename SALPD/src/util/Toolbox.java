@@ -27,17 +27,24 @@ public class Toolbox {
     }
     
     public static boolean verificaLetras(String s){
-        if(s.matches("[a-zA-Z*]")){
+        if(s.matches("[a-zA-Z]*")){
             return true;
         }
         return true;
     }
     
     public static boolean verificaLetrasNumeros(String s){
-        if(s.matches("[a-zA-Z0-9*]")){
+        if(s.matches("[a-zA-Z0-9]*")){
             return true;
         }
         return true;
+    }
+    
+    public static boolean comparaTipos(int usuario1, int usuario2){
+        if(usuario1 > usuario2){
+            return true;
+        }
+        return false;
     }
     
 }

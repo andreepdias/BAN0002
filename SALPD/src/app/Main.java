@@ -36,9 +36,9 @@ public class Main {
             Toolbox.limpaTela();
             System.out.println("Sistema de Apoio a Localização de Pessoas Desparecidas");
             System.out.println("\nÁrea de Login:\n");
-            System.out.print("Usuário:\t");
+            System.out.print("Usuário: ");
             login = input.nextLine(); 
-            System.out.print("Senha:\t\t");
+            System.out.print("Senha: ");
             senha = input.nextLine();
 
             o = NegocioFacade.login(login, senha);
@@ -51,6 +51,9 @@ public class Main {
             case 5:
                 menuAdministrador();
                 break;
+            case 4:
+                menuGestor();
+                break;
         }
     }
     
@@ -60,7 +63,7 @@ public class Main {
         do{
             Toolbox.limpaTela();
             System.out.println("Menu de Administração - SALPD\n");
-            System.out.println("O que você deseja realizar?");
+            System.out.println("O que você deseja fazer?");
             System.out.println("\t1 - Inserir novo usuário");
             System.out.println("\t2 - Listar todos os usuários");
             System.out.println("\t3 - Remover um usuário\n");
@@ -124,6 +127,76 @@ public class Main {
         }while(opcao != 0);
     }
     
+    private static void menuGestor(){
+       int opcao;
+        
+        do{
+            Toolbox.limpaTela();
+            System.out.println("Menu de Gestor - SALPD\n");
+            System.out.println("O que você deseja fazer?");
+            System.out.println("\t1 - Inserir novo usuário");
+            System.out.println("\t2 - Listar todos os usuários");
+            System.out.println("\t3 - Remover um usuário\n");
+            System.out.println("\t4 - Cadastrar pessoa desaparecida");
+            System.out.println("\t5 - Listar pessoas desaparecidas");
+            System.out.println("\t6 - Remover pessoas desaparecidas\n");
+            System.out.println("\t7 - Cadastrar apelido");
+            System.out.println("\t8 - Listar apelidos");
+            System.out.println("\t9 - Remover apelido\n");
+            System.out.println("\t10 - Cadastrar denúncia");
+            System.out.println("\t11 - Listar denúncias");
+            System.out.println("\t12 - Remover denúncia\n");
+            System.out.println("\t13 - Listar Localizações\n");
+            System.out.println("\t0 - Sair\n");
+            System.out.printf("$: ");
+        
+            opcao = Integer.parseInt(input.nextLine());
+            
+            switch(opcao){
+                case 1:
+                    menuInserirUsuario();
+                    break;
+                case 2:
+                    menuListarUsuarios();
+                    break;
+                case 3:
+                    menuRemoverUsuario();
+                    break;
+                case 4:
+                    menuInserirPessoaDesparecida();
+                    break;
+                case 5:
+                    menuListarPessoasDesparecidas();
+                    break;
+                case 6:
+                    menuRemoverPessoaDesparecida();
+                    break;
+                case 7:
+                    menuInserirApelido();
+                    break;
+                case 8:
+                    menuListarApelidos();
+                    break;
+                case 9:
+                    menuRemoverApelido();
+                    break;
+                case 10:
+                    menuInserirDenuncia();
+                    break;
+                case 11:
+                    menuListarDenuncias();
+                    break;
+                case 12:
+                    menuRemoverDenuncia();
+                    break;
+                case 13:
+                    menuListarLocalizacoes();
+                    break;
+            }
+            
+        }while(opcao != 0);  
+    }
+    
     private static void menuInserirUsuario(){
         String login, senha, nome;
         int tipo;
@@ -140,7 +213,7 @@ public class Main {
         System.out.printf("Tipo: ");
         tipo = Integer.parseInt(input.nextLine());
 
-        o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
+        o = NegocioFacade.cadastrarUsuario(usuario.getTipo(), login, senha, nome, tipo);
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();
@@ -154,7 +227,7 @@ public class Main {
         System.out.printf("Login: ");
         login = input.nextLine();
 
-        o = NegocioFacade.removerUsuario(login);
+        o = NegocioFacade.removerUsuario(usuario.getTipo(), login);
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();

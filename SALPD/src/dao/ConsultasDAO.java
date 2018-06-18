@@ -55,4 +55,30 @@ public class ConsultasDAO {
         return o;
     }
     
+    public Operacao findTipoUsuario(String login){
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        Operacao o = new Operacao();
+        String nomeTipo = null;
+        
+        try{
+            st = c.prepareStatement("SELECT nome FROM Usuarios u JOIN Usuario_Tipos t ON (u.tipo = t.id AND u.login = ?)");
+            st.setString(1, login);
+            rs = st.executeQuery();
+            
+            rs.next();
+            o.setDado(rs.getString("nome"));
+            
+            o.setSucesso(true);
+                        
+        }catch(SQLException ex){
+            o.addMensagem("Falha ao consultar o tipo do usuário.");
+        }
+        Conexao.encerrarConexao(c, st, rs);
+        return o; 
+    }
+    
 }
+

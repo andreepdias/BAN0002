@@ -29,11 +29,15 @@ public class NegocioFacade {
         return o;
     }
        
-    public static Operacao cadastrarUsuario(String login, String senha, String nome, int tipo){
+    public static Operacao cadastrarUsuario(int tipoUsuarioMain, String login, String senha, String nome, int tipo){
 
         Operacao o = new Operacao();
         boolean valido = true;
-
+        
+        if(!Toolbox.comparaTipos(tipoUsuarioMain, tipo)){
+            o.addMensagem("Você não têm permissão para cadastrar esse tipo de usuário.\n");
+            valido = false;
+        }
         if(!Toolbox.verificaLetrasNumeros(login)){
             o.addMensagem("O Login precisa conter apenas letras e números.\n");
             valido = false;
@@ -63,12 +67,29 @@ public class NegocioFacade {
         return o;
 
     }
-    public static Operacao removerUsuario(String login){
-        Operacao o;            
-        UsuariosDAO dao = new UsuariosDAO();            
-        o = dao.remover(login);
-
-        return o;
+    public static Operacao removerUsuario(int tipoUsuarioMain, String login){
+        Operacao o;
+        
+       ConsultasDAO temp = new ConsultasDAO();
+       o = temp.findTipoUsuario(login);
+       
+       if(o.isSucesso()){
+          if(o.getDado() == null){
+              o.setSucesso(false);
+              o.addMensagem("Não existe usuário com o login informado.\n");
+              return o;
+          }
+          if(!Toolbox.comparaTipos(tipoUsuarioMain, ((Usuario) o.getDado()).getTipo())){
+              o.setSucesso(false);
+              o.setDado(null);
+              o.addMensagem("Você não têm permissão para cadastrar esse tipo de usuário.\n");
+              return o;
+          }
+          
+          UsuariosDAO dao = new UsuariosDAO();          
+          o = dao.remover(login);
+       }
+       return o;
 
     }
     public static Operacao listarUsuarios(){

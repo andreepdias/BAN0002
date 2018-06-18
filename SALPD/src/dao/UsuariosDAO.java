@@ -102,6 +102,7 @@ public class UsuariosDAO {
         
     }
     
+    
     public Operacao listar(){
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
