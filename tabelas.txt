@@ -18,8 +18,10 @@ CREATE TABLE Pessoas_Desaparecidas (
 	RG varchar(20),
 	CPF varchar(11) UNIQUE, 
 	nome varchar(100) NOT NULL, 
-	ultimo_local varchar(300), 
-	inserido_por int NOT NULL, atualizado_por int NOT NULL, 
+	ultimo_local int, 
+	inserido_por int NOT NULL, 
+	atualizado_por int NOT NULL, 
+	FOREIGN KEY (ultimo_local) REFERENCES Localizacoes (id),
 	FOREIGN KEY (inserido_por) REFERENCES Usuarios (id), 
 	FOREIGN KEY (atualizado_por) REFERENCES Usuarios (id)
 );
@@ -53,18 +55,17 @@ CREATE TABLE Denuncias (
 
 
 DROP TABLE Usuario_Tipos CASCADE;
-	DELETE * FROM Usuario_Tipos;
+DELETE * FROM Usuario_Tipos;
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (5, 'Administrador', 'Acesso irrestrito ao sistema');
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (4, 'Gestor', 'Gerencia o sistema');
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (3, 'Agente', 'Atua em campo');
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (2, 'Informante', 'Contribui com informações novas');
 INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (1, 'Anonimo', 'Realiza denuncias anonimamente');
 
-
-
-
 DROP TABLE Usuarios CASCADE;
 INSERT INTO Usuarios (login, senha, nome, tipo) VALUES ('admin', 'admin', 'Administrador', 5);
+
+D
 
 DROP TABLE Localizacoes CASCADE;
 

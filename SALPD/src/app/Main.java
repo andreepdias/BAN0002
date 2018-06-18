@@ -188,7 +188,7 @@ public class Main {
         System.out.printf("RG: ");
         rg = input.nextLine();
 
-        o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg);
+        o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg, getUsuario().getId(), getUsuario().getId());
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();
@@ -308,9 +308,17 @@ public class Main {
         
 //        System.out.println(o.getMensagem());
         
+        /** Caso consiga cadastrar uma denúncia, cadastra a localização referente à essa denúncia**/
         if(o.isSucesso()){
             o = NegocioFacade.cadastrarLocalizacao(id_pessoa, (int)o.getDado(), local, data, hora);
-            System.out.println(o.getMensagem());
+            
+            /** Caso consiga cadastrar a localização, atualiza a última localização na tabela de pessoas_desaparecidas**/
+            if(o.isSucesso()){
+                o = NegocioFacade.atualizarLocalizacao(id_pessoa, (int)o.getDado());
+                
+                System.out.println(o.getMensagem());
+            }
+            
         }else{
 //            o = NegocioFacade.removerDenuncia((int)o.getDado());
             System.out.println(o.getMensagem());
@@ -369,7 +377,7 @@ public class Main {
             System.out.println("Lista de Localizações:\n");
             System.out.println("Id\t-\tId_pessoa\t-\tId_denuncia\t-\tLocal\t-\tData\t-\tHora");
             for(Localizacao l : (List<Localizacao>) o.getDado()){
-                System.out.println(l.getId() + "\t-\t" + l.getId_pessoa() + "\t-\t" + l.getId_denuncia() + "\t-\t" + l.getLocal() + "\t-\t" + l.getData() + "\t-\t\t" + l.getHora());
+                System.out.println(l.getId() + "\t-\t" + l.getId_pessoa() + "\t-\t" + l.getId_denuncia() + "\t-\t" + l.getLocal() + "\t-\t" + l.getData() + "\t-\t\t    " + l.getHora());
 //                System.out.println("Inserido por: " + d.getId_usuario());
             }      
         }

@@ -20,9 +20,12 @@ public class Pessoas_DesaparecidasDAO {
         Operacao o = new Operacao();
 
         try {
-            st = c.prepareStatement("INSERT INTO Pessoas_Desaparecidas (RG, nome) VALUES (?, ?)");
+            st = c.prepareStatement("INSERT INTO Pessoas_Desaparecidas (RG, nome, inserido_por, atualizado_por) VALUES (?, ?, ?, ?)");
             st.setString(1, p.getRG());
             st.setString(2, p.getNome());
+            st.setInt(3, p.getInserido_por());
+            st.setInt(4, p.getAtualizado_por());
+            
 
             st.executeUpdate();
 
@@ -90,6 +93,30 @@ public class Pessoas_DesaparecidasDAO {
         }catch(SQLException ex){
             o.addMensagem("Falha ao buscar na tabela Usuarios.");
         }
+        return o;
+    }
+     
+     public Operacao atualizar(int id_pessoa, int id_localizacao){
+
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null;
+        Operacao o = new Operacao();
+
+        try {
+            st = c.prepareStatement("UPDATE Pessoas_Desaparecidas SET ultimo_local = ? WHERE id = ?");
+            st.setInt(1, id_localizacao);
+            st.setInt(2, id_pessoa);
+
+            st.executeUpdate();
+
+            o.setSucesso(true);
+            o.addMensagem("Sucesso ao atualizar pessoa desaparecida no banco de dados.\n");
+            
+        } catch (SQLException ex) {
+            o.addMensagem("Erro ao atualizar pessoa desaparecida do banco de dados.\n");
+        }
+        Conexao.encerrarConexao(c, st);
+
         return o;
     }
 

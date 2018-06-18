@@ -13,12 +13,13 @@ public class Pessoa_Desaparecida {
     public Pessoa_Desaparecida() {
     }
 
-    public Pessoa_Desaparecida(String nome, String RG) {
+    public Pessoa_Desaparecida(String RG, String nome, int inserido_por, int atualizado_por) {
         this.RG = RG;
         this.nome = nome;
+        this.inserido_por = inserido_por;
+        this.atualizado_por = atualizado_por;
     }
-    
-    
+
     public int getId() {
         return id;
     }

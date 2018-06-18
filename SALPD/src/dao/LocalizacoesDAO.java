@@ -17,17 +17,24 @@ public class LocalizacoesDAO {
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
+        ResultSet rs = null;
         Operacao o = new Operacao();
+        int id = 0;
 
         try {
 //            st = c.prepareStatement("INSERT INTO Localizacoes (id_pessoa, id_denuncia, local, data, hora) VALUES (?, ?, ?, ?, ?)");
-            st = c.prepareStatement("INSERT INTO Localizacoes (id_pessoa, id_denuncia, local, data, hora) VALUES (?, ?, ?, '" + l.getData() + "', '" + l.getHora() + "')");
+            st = c.prepareStatement("INSERT INTO Localizacoes (id_pessoa, id_denuncia, local, data, hora) VALUES (?, ?, ?, '" + l.getData() + "', '" + l.getHora() + "') RETURNING id");
             st.setInt(1, l.getId_pessoa());
             st.setInt(2, l.getId_denuncia());
             st.setString(3, l.getLocal());
 //            st.setString(4, l.getData());
 //            st.setString(5, l.getHora());
-            st.executeUpdate();
+//            st.executeUpdate();
+            rs = st.executeQuery();
+            if(rs.next()){
+                id = rs.getInt("id");
+            }
+            o.setDado(id);
 
             o.setSucesso(true);
             o.addMensagem("Sucesso ao inserir uma nova localização no banco de dados.\n");
