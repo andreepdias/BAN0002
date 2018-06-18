@@ -284,6 +284,13 @@ public class NegocioFacade {
 
         return o;
     }
+    
+    public static Operacao consultarVisao(){
+        ConsultasDAO dao = new ConsultasDAO();
+        Operacao o = dao.consultarVisaoPessoasDesaparecidas();
+
+        return o;
+   }
         
 
     

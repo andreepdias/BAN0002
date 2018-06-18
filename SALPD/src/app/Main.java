@@ -77,6 +77,7 @@ public class Main {
             System.out.println("\t11 - Listar denúncias");
             System.out.println("\t12 - Remover denúncia\n");
             System.out.println("\t13 - Listar Localizações\n");
+            System.out.println("\t14 - Buscar por visões\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -121,6 +122,9 @@ public class Main {
                     break;
                 case 13:
                     menuListarLocalizacoes();
+                    break;
+                case 14:
+                    menuVisoes();
                     break;
             }
             
@@ -147,6 +151,7 @@ public class Main {
             System.out.println("\t11 - Listar denúncias");
             System.out.println("\t12 - Remover denúncia\n");
             System.out.println("\t13 - Listar Localizações\n");
+            System.out.println("\t14 - Buscar por visões\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -191,6 +196,9 @@ public class Main {
                     break;
                 case 13:
                     menuListarLocalizacoes();
+                    break;
+                case 14:
+                    menuVisoes();
                     break;
             }
             
@@ -456,6 +464,32 @@ public class Main {
             }      
         }
         Toolbox.aguarda();
+    }
+    
+    private static void menuVisoes(){
+        int escolha_visao;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Escolha uma dentre as visões disponíveis:");
+        System.out.println("\t1 - Pessoas desaparecidas a menos de 6 meses, com informação de localização fornecida a menos de 7 dias por denúncia de um informante");
+        
+        escolha_visao = Integer.parseInt(input.nextLine());
+        
+        switch(escolha_visao){
+            case 1:
+                o = NegocioFacade.consultarVisao();
+                System.out.printf(o.getMensagem());
+                if(o.isSucesso()){
+                    System.out.println("Lista de Localizações:\n");
+                    System.out.println("Id\t-\tId_pessoa\t-\tId_denuncia\t-\tLocal\t-\tData\t-\tHora");
+                    System.out.println("Id\t-\tNome\t-\tRG");
+                    for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
+                        System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getRG());
+                    }      
+        }
+        Toolbox.aguarda();
+        }        
     }
 
     
