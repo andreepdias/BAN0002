@@ -8,6 +8,7 @@ package app;
 import java.util.List;
 import java.util.Scanner;
 import modelo.*;
+import modelo.consultas.*;
 import negocio.NegocioFacade;
 import util.*;
 
@@ -168,10 +169,10 @@ public class Main {
 
         if(o.isSucesso()){
             System.out.println("Lista de usuários:\n");
-            System.out.println("Id\t-\tNome\t-\tTipo");
-            for(Usuario u : (List<Usuario>) o.getDado()){
+            System.out.println("Id - Login - Senha - Nome - Tipo");
+            for(listarUsuarios l : (List<listarUsuarios>) o.getDado()){
 //                String nomeTipo = (String) NegocioFacade.nomeTipo(u.getTipo()).getDado();
-                System.out.println(u.getId() + "\t-\t" + u.getNome() + "\t-\t" + u.getTipo());
+                System.out.println(l.getId() + "\t-\t" + l.getLogin() + "\t-\t" + l.getSenha() + "\t-\t" + l.getNome() + "\t-\t" + l.getTipo());
             }      
         }
         Toolbox.aguarda();

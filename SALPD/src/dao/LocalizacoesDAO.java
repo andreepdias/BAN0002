@@ -101,6 +101,7 @@ public class LocalizacoesDAO {
         }catch(SQLException ex){
             o.addMensagem("Falha ao buscar na tabela Localizações.\n");
         }
+        Conexao.encerrarConexao(c, st, rs);
         return o;
     }
 

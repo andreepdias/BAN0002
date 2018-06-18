@@ -96,6 +96,7 @@ public class DenunciasDAO {
         }catch(SQLException ex){
             o.addMensagem("Falha ao buscar na tabela Denuncias.\n");
         }
+        Conexao.encerrarConexao(c, st, rs);
         return o;
     }
 

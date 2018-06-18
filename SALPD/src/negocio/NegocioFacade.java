@@ -72,8 +72,8 @@ public class NegocioFacade {
 
     }
     public static Operacao listarUsuarios(){
-        UsuariosDAO dao = new UsuariosDAO();
-        Operacao o = dao.listar();
+        ConsultasDAO dao = new ConsultasDAO();
+        Operacao o = dao.listarUsuarios();
 
         return o;
    }

@@ -132,6 +132,7 @@ public class UsuariosDAO {
         }catch(SQLException ex){
             o.addMensagem("Falha ao buscar na tabela Usuarios.");
         }
+        Conexao.encerrarConexao(c, st, rs);
         return o;
     }
 }
