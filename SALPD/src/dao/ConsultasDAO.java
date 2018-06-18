@@ -78,40 +78,6 @@ public class ConsultasDAO {
         }
         Conexao.encerrarConexao(c, st, rs);
         return o; 
-    }
-    
-    public Operacao consultarVisaoPessoasDesaparecidas(){
-        Connection c = Conexao.estabelecerConexao();
-        PreparedStatement st = null;
-        ResultSet rs = null;
-
-        Operacao o = new Operacao();
-        List<listarPessoasDesaparecidas> pessoas = null;
-        
-        try{
-            pessoas = new ArrayList<>();
-            st = c.prepareStatement("SELECT * FROM visao_teste");
-            rs = st.executeQuery();
-            while(rs.next()){
-                listarPessoasDesaparecidas pessoa = new listarPessoasDesaparecidas();
-                pessoa.setId(rs.getInt("id"));               
-                pessoa.setRG(rs.getString("RG"));                
-                pessoa.setNome(rs.getString("nome"));
-                pessoa.setUltimo_local(rs.getInt("ultimo_local"));                 
-                pessoa.setInserido_por(rs.getInt("inserido_por"));                
-                pessoa.setAtualizado_por(rs.getInt("atualizado_por"));                               
-                pessoas.add(pessoa);
-            }
-
-            o.setDado(pessoas);            
-            o.setSucesso(true);
-                        
-        }catch(SQLException ex){
-            o.addMensagem("Falha ao consultar a visão de exemplo.");
-        }
-        Conexao.encerrarConexao(c, st, rs);
-        return o; 
-    }
-    
+    }    
 }
 

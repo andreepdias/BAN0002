@@ -285,9 +285,17 @@ public class NegocioFacade {
         return o;
     }
     
-    public static Operacao consultarVisao(){
-        ConsultasDAO dao = new ConsultasDAO();
-        Operacao o = dao.consultarVisaoPessoasDesaparecidas();
+    public static Operacao consultarVisao(int ind_visao){
+        VisoesDAO dao = new VisoesDAO();
+        Operacao o = null;
+        switch(ind_visao){
+            case 1:
+                o = dao.consultarPessoasDesaparecidas();            
+                break;
+            case 2:
+                o = dao.consultarAgentesDenunciaJoinville();
+                break;
+        }        
 
         return o;
    }

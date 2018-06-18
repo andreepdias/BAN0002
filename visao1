@@ -1,0 +1,3 @@
+telefone e nome de todos os usuários agentes que fizeram denúncias em joinville
+
+select usuarios_agentes.id, usuarios_agentes.nome, denuncias.telefone from denuncias join (select usuarios.id, usuarios.nome from usuarios join usuario_tipos on usuarios.tipo = usuario_tipos.id where usuario_tipos.id = 3) as usuarios_agentes on usuarios_agentes.id = denuncias.id_usuario where denuncias.local_ligacao = 'Joinville';

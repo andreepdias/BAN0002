@@ -11,6 +11,7 @@ import modelo.*;
 import modelo.consultas.*;
 import negocio.NegocioFacade;
 import util.*;
+import visoes.*;
 
 /**
  *
@@ -473,21 +474,35 @@ public class Main {
         Toolbox.limpaTela();
         System.out.println("Escolha uma dentre as visões disponíveis:");
         System.out.println("\t1 - Pessoas desaparecidas a menos de 6 meses, com informação de localização fornecida a menos de 7 dias por denúncia de um informante");
+        System.out.println("\t2 - Usuários que são agentes e fizeram denúncias na cidade de Joinville");
+
         
         escolha_visao = Integer.parseInt(input.nextLine());
         
         switch(escolha_visao){
             case 1:
-                o = NegocioFacade.consultarVisao();
+                o = NegocioFacade.consultarVisao(escolha_visao);
                 System.out.printf(o.getMensagem());
                 if(o.isSucesso()){
                     System.out.println("Id\t-\tRG\t-\tNome");
-                    for(listarPessoasDesaparecidas p : (List<listarPessoasDesaparecidas>) o.getDado()){
+                    for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
                         System.out.println(p.getId() + "\t-\t" + p.getRG() + "\t-\t" + p.getNome());
                     }      
-        }
-        Toolbox.aguarda();
+                }
+            break;
+            case 2:
+                o = NegocioFacade.consultarVisao(escolha_visao);
+                System.out.printf(o.getMensagem());
+                if(o.isSucesso()){
+                    System.out.println("Id\t-\tNome\t-\tTelefone");
+                    for(AgentesDenunciaJoinville p : (List<AgentesDenunciaJoinville>) o.getDado()){
+                        System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getTelefone());
+                    }      
+                }
+            break;
         }        
+        Toolbox.aguarda();
+
     }
 
     
