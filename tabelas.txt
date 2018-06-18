@@ -34,9 +34,12 @@ CREATE TABLE Apelidos (
 CREATE TABLE Localizacoes (
 	id serial PRIMARY KEY, 
 	id_pessoa int NOT NULL, 
+	id_denuncia int NOT NULL UNIQUE,
 	local varchar(300) NOT NULL, 
-	data_hora timestamp NOT NULL, 
-	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id)
+	data date NOT NULL, 
+	hora time NOT NULL,
+	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id),
+	FOREIGN KEY (id_denuncia) REFERENCES Denuncias (id)
 );
 
 CREATE TABLE Denuncias (
@@ -62,5 +65,7 @@ INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (1, 'Anonimo', 'Realiza d
 
 DROP TABLE Usuarios CASCADE;
 INSERT INTO Usuarios (login, senha, nome, tipo) VALUES ('admin', 'admin', 'Administrador', 5);
+
+DROP TABLE Localizacoes CASCADE;
 
 

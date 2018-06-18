@@ -17,15 +17,22 @@ public class DenunciasDAO {
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
+        ResultSet rs = null;
         Operacao o = new Operacao();
+        int id = 0;
 
         try {
-            st = c.prepareStatement("INSERT INTO Denuncias (id_usuario, telefone, local_ligacao) VALUES (?, ?, ?)");
+            st = c.prepareStatement("INSERT INTO Denuncias (id_usuario, telefone, local_ligacao) VALUES (?, ?, ?) RETURNING id");
             st.setInt(1, d.getId_usuario());
             st.setString(2, d.getTelefone());
             st.setString(3, d.getLocal_ligacao());
 
-            st.executeUpdate();
+//            st.executeUpdate();;
+            rs = st.executeQuery();
+            if(rs.next()){
+                id = rs.getInt("id");
+            }
+            o.setDado(id);
 
             o.setSucesso(true);
             o.addMensagem("Sucesso ao inserir denúncia no banco de dados.\n");

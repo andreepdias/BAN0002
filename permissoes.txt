@@ -17,9 +17,11 @@ cadastrar, listar e remover pessoas desaparecidas
 cadastrar, listar e remover denúncias
 
 Informante:
+listar pessoas desaparecidas
 cadastrar denúncias
 
 Anônimo:
+listar pessoas desaparecidas
 cadastrar denúncias
 
 

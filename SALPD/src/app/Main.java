@@ -72,6 +72,7 @@ public class Main {
             System.out.println("\t10 - Cadastrar denúncia");
             System.out.println("\t11 - Listar denúncias");
             System.out.println("\t12 - Remover denúncia\n");
+            System.out.println("\t13 - Listar Localizações\n");
             System.out.println("\t0 - Sair\n");
             System.out.printf("$: ");
         
@@ -114,6 +115,9 @@ public class Main {
                 case 12:
                     menuRemoverDenuncia();
                     break;
+                case 13:
+                    menuListarLocalizacoes();
+                    break;
             }
             
         }while(opcao != 0);
@@ -137,7 +141,7 @@ public class Main {
 
         o = NegocioFacade.cadastrarUsuario(login, senha, nome, tipo);
 
-        System.out.printf(o.getMensagem());
+        System.out.println(o.getMensagem());
         Toolbox.aguarda();
     }
     private static void menuRemoverUsuario(){
@@ -233,7 +237,7 @@ public class Main {
         System.out.println("Cadastro de um apelido para uma pessoa desaparecida:\n");
         System.out.printf("Apelido: ");
         apelido = input.nextLine();
-        System.out.printf("id_pessoa: ");
+        System.out.printf("ID da pessoa: ");
         id_pessoa = Integer.parseInt(input.nextLine());
 
         o = NegocioFacade.cadastrarApelido(id_pessoa, apelido);
@@ -277,23 +281,42 @@ public class Main {
         Toolbox.aguarda();
     }
     
-    
     private static void menuInserirDenuncia(){
-        String telefone, local;
-        int id_usuario;
+        String telefone, local_ligacao, local, data, hora;
+        int id_usuario, id_pessoa;
         Operacao o;
         
         Toolbox.limpaTela();
         System.out.println("Cadastro de nova denúncia:\n");
+        System.out.println("Dados de quem está denunciando:");
         System.out.printf("Telefone: ");
         telefone = input.nextLine();
         System.out.printf("Local: ");
+        local_ligacao = input.nextLine();
+        
+        System.out.println("\nDados da pessoa desaparecida:");
+        System.out.printf("ID: ");
+        id_pessoa = Integer.parseInt(input.nextLine());
+        System.out.printf("Local: ");
         local = input.nextLine();
+        System.out.printf("Data: ");
+        data = input.nextLine();
+        System.out.printf("Hora: ");
+        hora = input.nextLine();
 
-        o = NegocioFacade.cadastrarDenuncia(telefone, local, getUsuario().getId());
-
-        System.out.printf(o.getMensagem());
+        o = NegocioFacade.cadastrarDenuncia(telefone, local_ligacao, getUsuario().getId());
+        
+//        System.out.println(o.getMensagem());
+        
+        if(o.isSucesso()){
+            o = NegocioFacade.cadastrarLocalizacao(id_pessoa, (int)o.getDado(), local, data, hora);
+            System.out.println(o.getMensagem());
+        }else{
+//            o = NegocioFacade.removerDenuncia((int)o.getDado());
+            System.out.println(o.getMensagem());
+        }
         Toolbox.aguarda();
+        
     }
     private static void menuRemoverDenuncia(){
         int id;
@@ -304,7 +327,10 @@ public class Main {
         System.out.printf("Id: ");
         id = Integer.parseInt(input.nextLine());
 
-        o = NegocioFacade.removerDenuncia(id);
+        o = NegocioFacade.removerLocalizacao(id);
+        if(o.isSucesso()){
+               o = NegocioFacade.removerDenuncia(id);
+        }
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();
@@ -328,6 +354,29 @@ public class Main {
         Toolbox.aguarda();
     }
 
+    private static void menuListarLocalizacoes(){
+        int id_pessoa;
+        Operacao o;
+        
+        Toolbox.limpaTela();
+        System.out.println("Digite o ID da pessoa desaparecida:");
+        id_pessoa = Integer.parseInt(input.nextLine());
+            
+        o = NegocioFacade.listarLocalizacoes(id_pessoa);
+        System.out.printf(o.getMensagem());
+
+        if(o.isSucesso()){
+            System.out.println("Lista de Localizações:\n");
+            System.out.println("Id\t-\tId_pessoa\t-\tId_denuncia\t-\tLocal\t-\tData\t-\tHora");
+            for(Localizacao l : (List<Localizacao>) o.getDado()){
+                System.out.println(l.getId() + "\t-\t" + l.getId_pessoa() + "\t-\t" + l.getId_denuncia() + "\t-\t" + l.getLocal() + "\t-\t" + l.getData() + "\t-\t\t" + l.getHora());
+//                System.out.println("Inserido por: " + d.getId_usuario());
+            }      
+        }
+        Toolbox.aguarda();
+    }
+
+    
     public static Usuario getUsuario() {
         return usuario;
     }
