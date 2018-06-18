@@ -89,20 +89,20 @@ public class ConsultasDAO {
         List<listarPessoasDesaparecidas> pessoas = null;
         
         try{
-            st = c.prepareStatement("SELECT * FROM visao_exemplo");
+            pessoas = new ArrayList<>();
+            st = c.prepareStatement("SELECT * FROM visao_teste");
             rs = st.executeQuery();
-            
             while(rs.next()){
                 listarPessoasDesaparecidas pessoa = new listarPessoasDesaparecidas();
-                pessoa.setId(rs.getInt("id"));
-                pessoa.setRG(rs.getString("RG"));
+                pessoa.setId(rs.getInt("id"));               
+                pessoa.setRG(rs.getString("RG"));                
                 pessoa.setNome(rs.getString("nome"));
-                pessoa.setUltimo_local(rs.getInt("ultimo_local"));
-                pessoa.setInserido_por(rs.getInt("inserido_por"));
-                pessoa.setAtualizado_por(rs.getInt("atualizado_por"));
-                
+                pessoa.setUltimo_local(rs.getInt("ultimo_local"));                 
+                pessoa.setInserido_por(rs.getInt("inserido_por"));                
+                pessoa.setAtualizado_por(rs.getInt("atualizado_por"));                               
                 pessoas.add(pessoa);
             }
+
             o.setDado(pessoas);            
             o.setSucesso(true);
                         

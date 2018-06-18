@@ -481,11 +481,9 @@ public class Main {
                 o = NegocioFacade.consultarVisao();
                 System.out.printf(o.getMensagem());
                 if(o.isSucesso()){
-                    System.out.println("Lista de Localizações:\n");
-                    System.out.println("Id\t-\tId_pessoa\t-\tId_denuncia\t-\tLocal\t-\tData\t-\tHora");
-                    System.out.println("Id\t-\tNome\t-\tRG");
-                    for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
-                        System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getRG());
+                    System.out.println("Id\t-\tRG\t-\tNome");
+                    for(listarPessoasDesaparecidas p : (List<listarPessoasDesaparecidas>) o.getDado()){
+                        System.out.println(p.getId() + "\t-\t" + p.getRG() + "\t-\t" + p.getNome());
                     }      
         }
         Toolbox.aguarda();
