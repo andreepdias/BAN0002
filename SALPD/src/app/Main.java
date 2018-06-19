@@ -261,7 +261,7 @@ public class Main {
     }
     
     private static void menuInserirPessoaDesparecida(){
-        String nome, rg;
+        String rg, cpf, nome;
         Operacao o;
         
         Toolbox.limpaTela();
@@ -270,8 +270,10 @@ public class Main {
         nome = input.nextLine();
         System.out.printf("RG: ");
         rg = input.nextLine();
+        System.out.printf("CPF: ");
+        cpf = input.nextLine();
 
-        o = NegocioFacade.cadastrarPessoaDesaparecida(nome, rg, getUsuario().getId(), getUsuario().getId());
+        o = NegocioFacade.cadastrarPessoaDesaparecida(rg, cpf, nome, getUsuario().getId(), getUsuario().getId());
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();
@@ -300,9 +302,9 @@ public class Main {
 
         if(o.isSucesso()){
             System.out.println("Lista de Pessoas Desaparecidas:\n");
-            System.out.println("Id\t-\tNome\t-\tRG");
+            System.out.println("Id\t-\tNome\t-\tRG\t-\tCPF");
             for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
-                System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getRG());
+                System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getRG() + "\t-\t" + p.getCPF());
 //                System.out.println("Inserido por: " + p.getInserido_por());
 //                System.out.println("Atualizado por: " + p.getAtualizado_por());
             }      

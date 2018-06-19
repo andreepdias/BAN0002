@@ -112,7 +112,7 @@ public class NegocioFacade {
         return o;
     }
         
-    public static Operacao cadastrarPessoaDesaparecida(String nome, String rg, int inserido_por, int atualizado_por){
+    public static Operacao cadastrarPessoaDesaparecida(String rg, String cpf, String nome, int inserido_por, int atualizado_por){
 
         Operacao o = new Operacao();
         boolean valido = true;
@@ -131,7 +131,7 @@ public class NegocioFacade {
         }
 
         Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
-        Pessoa_Desaparecida p = new Pessoa_Desaparecida(nome, rg, inserido_por, atualizado_por);
+        Pessoa_Desaparecida p = new Pessoa_Desaparecida(rg, cpf, nome, inserido_por, atualizado_por);
 
         o = dao.inserir(p);
 

@@ -38,6 +38,7 @@ public class VisoesDAO {
                 Pessoa_Desaparecida pessoa = new Pessoa_Desaparecida();
                 pessoa.setId(rs.getInt("id"));               
                 pessoa.setRG(rs.getString("RG"));  
+                pessoa.setCPF(rs.getString("CPF"));  
                 pessoa.setNome(rs.getString("nome"));
                 pessoa.setUltimo_local(rs.getInt("ultimo_local"));                 
                 pessoa.setInserido_por(rs.getInt("inserido_por"));                

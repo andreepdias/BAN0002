@@ -5,6 +5,7 @@ public class Pessoa_Desaparecida {
     
     private  int id;
     private String RG;
+    private String CPF;
     private String nome;
     private int ultimo_local;
     private int inserido_por;
@@ -13,9 +14,10 @@ public class Pessoa_Desaparecida {
     public Pessoa_Desaparecida() {
     }
 
-    public Pessoa_Desaparecida(String RG, String nome, int inserido_por, int atualizado_por) {
+    public Pessoa_Desaparecida(String RG, String CPF, String nome, int inserido_por, int atualizado_por) {
         this.RG = RG;
         this.nome = nome;
+        this.CPF = CPF;
         this.inserido_por = inserido_por;
         this.atualizado_por = atualizado_por;
     }
@@ -34,6 +36,14 @@ public class Pessoa_Desaparecida {
 
     public void setRG(String RG) {
         this.RG = RG;
+    }
+    
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
     }
 
     public String getNome() {

@@ -20,11 +20,12 @@ public class Pessoas_DesaparecidasDAO {
         Operacao o = new Operacao();
 
         try {
-            st = c.prepareStatement("INSERT INTO Pessoas_Desaparecidas (RG, nome, inserido_por, atualizado_por) VALUES (?, ?, ?, ?)");
+            st = c.prepareStatement("INSERT INTO Pessoas_Desaparecidas (RG, CPF, nome, inserido_por, atualizado_por) VALUES (?, ?, ?, ?, ?)");
             st.setString(1, p.getRG());
-            st.setString(2, p.getNome());
-            st.setInt(3, p.getInserido_por());
-            st.setInt(4, p.getAtualizado_por());
+            st.setString(2, p.getCPF());
+            st.setString(3, p.getNome());            
+            st.setInt(4, p.getInserido_por());
+            st.setInt(5, p.getAtualizado_por());
             
 
             st.executeUpdate();
@@ -80,6 +81,7 @@ public class Pessoas_DesaparecidasDAO {
                 Pessoa_Desaparecida p = new Pessoa_Desaparecida();
                 p.setId(rs.getInt("id"));
                 p.setRG(rs.getString("RG"));
+                p.setCPF(rs.getString("CPF"));
                 p.setNome(rs.getString("nome"));
                 p.setUltimo_local(rs.getInt("ultimo_local"));
                 p.setInserido_por(rs.getInt("inserido_por"));
