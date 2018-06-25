@@ -240,7 +240,7 @@ public class NegocioFacade {
 
             /** Caso consiga cadastrar a localização, atualiza a última localização na tabela de pessoas_desaparecidas**/
             if(o2.isSucesso()){
-                o3 = atualizarLocalizacao(denunciado.getCPF(), (int)o2.getDado());
+                o3 = atualizarLocalizacao(denunciado.getCPF(), (int)o2.getDado(), id);
                 
                 if(!o3.isSucesso()){
                     daod.remover((int) o.getDado());
@@ -298,13 +298,13 @@ public class NegocioFacade {
 
         return o;
    }
-    public static Operacao atualizarLocalizacao(String cpf, int id_localizacao){
+    public static Operacao atualizarLocalizacao(String cpf, int id_localizacao, int id_usuario){
 
         Operacao o;
         
         Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
 
-        o = dao.atualizar(cpf, id_localizacao);
+        o = dao.atualizar(cpf, id_localizacao, id_usuario);
 
         return o;
     }
@@ -314,9 +314,12 @@ public class NegocioFacade {
         Operacao o = null;
         switch(ind_visao){
             case 1:
-                o = dao.consultarPessoasDesaparecidas();            
+                o = dao.consultarPessoasUmAno();            
                 break;
             case 2:
+                o = dao.consultarAgentesDenunciaJoinville();
+                break;
+            case 3:
                 o = dao.consultarAgentesDenunciaJoinville();
                 break;
         }        

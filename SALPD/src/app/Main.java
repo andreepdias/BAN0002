@@ -37,9 +37,9 @@ public class Main {
         while(!o.isSucesso() && opcao != 1 && opcao != 2){
             Toolbox.limpaTela();
             System.out.println("Sistema de Apoio a Localização de Pessoas Desparecidas");
-            System.out.println("O que você deseja fazer?");
+            System.out.println("\nO que você deseja fazer?");
             System.out.println("\t1 - Fazer login");
-            System.out.println("\t2 - Entrar como Informante Anônimo");
+            System.out.println("\t2 - Entrar como Informante Anônimo\n");
             System.out.print("$: ");
             opcao = Integer.parseInt(input.nextLine());
             Toolbox.limpaTela();
@@ -73,7 +73,9 @@ public class Main {
                     } 
                     break;
                 case 2:
-                    //Main.setUsuario(); //Precisa de um usuário anonimo pra colocar aqui
+                    o = NegocioFacade.login("anon", "anon");
+                    Main.setUsuario((Usuario) o.getDado());
+                    menuInformante();
                     break;
                     
             }
@@ -493,13 +495,19 @@ public class Main {
         int id_usuario;
         Operacao o;
         
-        Toolbox.limpaTela();
-        System.out.println("Cadastro de nova denúncia:\n");
-        System.out.println("Dados de quem está denunciando:");
-        System.out.printf("Telefone: ");
-        telefone = input.nextLine();
-        System.out.printf("Local: ");
-        local_ligacao = input.nextLine();
+        if(getUsuario().getTipo() != 1){
+            Toolbox.limpaTela();
+            System.out.println("Cadastro de nova denúncia:\n");
+            System.out.println("Dados de quem está denunciando:");
+            System.out.printf("Telefone: ");
+            telefone = input.nextLine();
+            System.out.printf("Local: ");
+            local_ligacao = input.nextLine();
+        }else{
+            telefone = "00000000";
+            local_ligacao = "-";
+        }
+        
         
         System.out.println("\nDados da pessoa desaparecida:");
         System.out.printf("CPF: ");
@@ -584,8 +592,9 @@ public class Main {
         
         Toolbox.limpaTela();
         System.out.println("Escolha uma dentre as visões disponíveis:");
-        System.out.println("\t1 - Pessoas desaparecidas a menos de 6 meses, com informação de localização fornecida a menos de 7 dias por denúncia de um informante");
+        System.out.println("\t1 - Pessoas desaparecidas sem novas informações a mais de um ano");
         System.out.println("\t2 - Usuários que são agentes e fizeram denúncias na cidade de Joinville");
+        System.out.println("\t2 - Nome dos Usuarios que realizaram denuncias em Joinville");
 
         
         escolha_visao = Integer.parseInt(input.nextLine());
@@ -595,9 +604,9 @@ public class Main {
                 o = NegocioFacade.consultarVisao(escolha_visao);
                 System.out.printf(o.getMensagem());
                 if(o.isSucesso()){
-                    System.out.println("Id\t-\tRG\t-\tNome");
+                    System.out.println("Id\t-\tNome");
                     for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
-                        System.out.println(p.getId() + "\t-\t" + p.getRG() + "\t-\t" + p.getNome());
+                        System.out.println(p.getId() + "\t-\t" + p.getNome());
                     }      
                 }
             break;
@@ -608,6 +617,16 @@ public class Main {
                     System.out.println("Id\t-\tNome\t-\tTelefone");
                     for(AgentesDenunciaJoinville p : (List<AgentesDenunciaJoinville>) o.getDado()){
                         System.out.println(p.getId() + "\t-\t" + p.getNome() + "\t-\t" + p.getTelefone());
+                    }      
+                }
+            break;
+            case 3:
+                o = NegocioFacade.consultarVisao(escolha_visao);
+                System.out.printf(o.getMensagem());
+                if(o.isSucesso()){
+                    System.out.println("Id\t-\tNome");
+                    for(Pessoa_Desaparecida p : (List<Pessoa_Desaparecida>) o.getDado()){
+                        System.out.println(p.getId() + "\t-\t" + p.getNome());
                     }      
                 }
             break;

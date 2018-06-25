@@ -134,16 +134,17 @@ public class Pessoas_DesaparecidasDAO {
 
     }
      
-     public Operacao atualizar(String cpf, int id_localizacao){
+     public Operacao atualizar(String cpf, int id_localizacao, int id_usuario){
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         Operacao o = new Operacao();
 
         try {
-            st = c.prepareStatement("UPDATE Pessoas_Desaparecidas SET ultimo_local = ? WHERE cpf = ?");
+            st = c.prepareStatement("UPDATE Pessoas_Desaparecidas SET ultimo_local = ?, atualizado_por = ? WHERE cpf = ?");
             st.setInt(1, id_localizacao);
-            st.setString(2, cpf);
+            st.setInt(2, id_usuario);
+            st.setString(3, cpf);
 
             st.executeUpdate();
 

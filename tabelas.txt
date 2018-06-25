@@ -1,6 +1,6 @@
 CREATE TABLE Usuario_Tipos (
 	id int PRIMARY KEY,
-	nome varchar(50) NOT NULL, 
+	nome varchar(50) NOT NULL,
 	descricao text NOT NULL
 );
 
@@ -8,47 +8,47 @@ CREATE TABLE Usuarios (
 	id serial PRIMARY KEY,
 	login varchar(50) UNIQUE NOT NULL,
 	senha varchar(50) NOT NULL,
-	nome varchar(200) NOT NULL, 
-	tipo int NOT NULL, 
+	nome varchar(200) NOT NULL,
+	tipo int NOT NULL,
 	FOREIGN KEY (tipo) REFERENCES Usuario_Tipos (id)
 );
 
 CREATE TABLE Pessoas_Desaparecidas (
-	id serial PRIMARY KEY, 
+	id serial PRIMARY KEY,
 	RG varchar(20),
-	CPF varchar(11) UNIQUE, 
-	nome varchar(100) NOT NULL, 
-	ultimo_local int, 
-	inserido_por int NOT NULL, 
-	atualizado_por int NOT NULL, 
+	CPF varchar(11) UNIQUE NOT NULL,
+	nome varchar(100) NOT NULL,
+	ultimo_local int,
+	inserido_por int NOT NULL,
+	atualizado_por int NOT NULL,
 	FOREIGN KEY (ultimo_local) REFERENCES Localizacoes (id),
-	FOREIGN KEY (inserido_por) REFERENCES Usuarios (id), 
+	FOREIGN KEY (inserido_por) REFERENCES Usuarios (id),
 	FOREIGN KEY (atualizado_por) REFERENCES Usuarios (id)
 );
 
 CREATE TABLE Apelidos (
-	id serial PRIMARY KEY, 
-	id_pessoa int NOT NULL, 
-	apelido varchar(100) NOT NULL, 
+	id serial PRIMARY KEY,
+	id_pessoa int NOT NULL,
+	apelido varchar(100) NOT NULL,
 	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id)
 );
 
 CREATE TABLE Localizacoes (
-	id serial PRIMARY KEY, 
-	id_pessoa int NOT NULL, 
+	id serial PRIMARY KEY,
+	id_pessoa int NOT NULL,
 	id_denuncia int NOT NULL UNIQUE,
-	local varchar(300) NOT NULL, 
-	data date NOT NULL, 
+	local varchar(300) NOT NULL,
+	data date NOT NULL,
 	hora time NOT NULL,
 	FOREIGN KEY (id_pessoa) REFERENCES Pessoas_Desaparecidas (id),
 	FOREIGN KEY (id_denuncia) REFERENCES Denuncias (id)
 );
 
 CREATE TABLE Denuncias (
-	id serial PRIMARY KEY, 
-	id_usuario int NOT NULL, 
-	telefone varchar(50) NOT NULL, 
-	local_ligacao varchar(300) NOT NULL, 
+	id serial PRIMARY KEY,
+	id_usuario int NOT NULL,
+	telefone varchar(50) NOT NULL,
+	local_ligacao varchar(300) NOT NULL,
 	FOREIGN KEY (id_usuario) REFERENCES Usuarios (id)
 );
 
@@ -64,9 +64,8 @@ INSERT INTO Usuario_Tipos (id, nome, descricao) VALUES (1, 'Anonimo', 'Realiza d
 
 DROP TABLE Usuarios CASCADE;
 INSERT INTO Usuarios (login, senha, nome, tipo) VALUES ('admin', 'admin', 'Administrador', 5);
+INSERT INTO Usuarios (login, senha, nome, tipo) VALUES ('anon', 'anon', 'Anonimo', 1);
 
-D
+DROP TABLE Pessoas_Desaparecidas CASCADE;
 
 DROP TABLE Localizacoes CASCADE;
-
-

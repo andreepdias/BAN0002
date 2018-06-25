@@ -86,5 +86,62 @@ public class VisoesDAO {
         return o; 
     }
     
+     public Operacao consultarPessoasJoinville(){
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        Operacao o = new Operacao();
+        List<Pessoa_Desaparecida> pessoas = null;
+        
+        try{
+            pessoas = new ArrayList<>();
+            st = c.prepareStatement("SELECT * FROM visao_joinville");
+            rs = st.executeQuery();
+            while(rs.next()){
+                Pessoa_Desaparecida pessoa = new Pessoa_Desaparecida();
+                pessoa.setId(rs.getInt("id"));               
+                pessoa.setCPF(rs.getString("nome"));  
+                pessoas.add(pessoa);
+            }
+
+            o.setDado(pessoas);            
+            o.setSucesso(true);
+                        
+        }catch(SQLException ex){
+            o.addMensagem("Falha ao consultar a visão.");
+        }
+        Conexao.encerrarConexao(c, st, rs);
+        return o; 
+    }
+      public Operacao consultarPessoasUmAno(){
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        Operacao o = new Operacao();
+        List<Pessoa_Desaparecida> pessoas = null;
+        
+        try{
+            pessoas = new ArrayList<>();
+            st = c.prepareStatement("SELECT * FROM visao_sem_info_um_ano");
+            rs = st.executeQuery();
+            while(rs.next()){
+                Pessoa_Desaparecida pessoa = new Pessoa_Desaparecida();
+                pessoa.setId(rs.getInt("id"));               
+                pessoa.setCPF(rs.getString("nome"));  
+                pessoas.add(pessoa);
+            }
+
+            o.setDado(pessoas);            
+            o.setSucesso(true);
+                        
+        }catch(SQLException ex){
+            o.addMensagem("Falha ao consultar a visão.");
+        }
+        Conexao.encerrarConexao(c, st, rs);
+        return o; 
+    }
+    
 }
 
