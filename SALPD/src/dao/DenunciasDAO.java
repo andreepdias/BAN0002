@@ -35,7 +35,6 @@ public class DenunciasDAO {
             o.setDado(id);
 
             o.setSucesso(true);
-            o.addMensagem("Sucesso ao inserir denúncia no banco de dados.\n");
             
         } catch (SQLException ex) {
             o.addMensagem("Erro ao inserir denúncia do banco de dados.\n");
@@ -56,7 +55,6 @@ public class DenunciasDAO {
             st.setInt(1, id);
             
             st.executeUpdate();
-            o.addMensagem("Sucesso ao remover denúncia.\n");
             
             o.setSucesso(true);
         } catch (SQLException ex) {

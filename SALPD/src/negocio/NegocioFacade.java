@@ -70,8 +70,8 @@ public class NegocioFacade {
     public static Operacao removerUsuario(int tipoUsuarioMain, String login){
         Operacao o;
         
-       ConsultasDAO temp = new ConsultasDAO();
-       o = temp.findTipoUsuario(login);
+       UsuariosDAO temp = new UsuariosDAO();
+       o = temp.getUsuario(login);
        
        if(o.isSucesso()){
           if(o.getDado() == null){
@@ -82,7 +82,7 @@ public class NegocioFacade {
           if(!Toolbox.comparaTipos(tipoUsuarioMain, ((Usuario) o.getDado()).getTipo())){
               o.setSucesso(false);
               o.setDado(null);
-              o.addMensagem("Você não têm permissão para cadastrar esse tipo de usuário.\n");
+              o.addMensagem("Você não têm permissão para remover esse tipo de usuário.\n");
               return o;
           }
           
@@ -138,10 +138,10 @@ public class NegocioFacade {
         return o;
 
     }
-    public static Operacao removerPessoaDesaparecida(int id){
+    public static Operacao removerPessoaDesaparecida(String cpf){
         Operacao o;            
         Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();            
-        o = dao.remover(id);
+        o = dao.remover(cpf);
 
         return o;
 
@@ -187,36 +187,72 @@ public class NegocioFacade {
         return o;
 
     }
-    public static Operacao listarApelidos(int id_pessoa){
-        ApelidosDAO dao = new ApelidosDAO();
-        Operacao o = dao.listar(id_pessoa);
+    public static Operacao listarApelidos(String cpf){
+        Pessoas_DesaparecidasDAO usDao = new Pessoas_DesaparecidasDAO();
+        Operacao o = usDao.getPessoa(cpf);
+        if(o.isSucesso()){
+           if(o.getDado() != null){
+                ApelidosDAO dao = new ApelidosDAO();
+                o = dao.listar(cpf); 
+           }
+           else{
+               o.setSucesso(false);
+               o.addMensagem("Não há nenhuma pessoa desaparecida registrada com esse CPF.");
+           }
+        }
+        
+        
+
 
         return o;
    }
 
-    public static Operacao cadastrarDenuncia(String telefone, String local, int id){
+    public static Operacao cadastrarDenuncia(String cpf, String telefone, String local, int id, String data, String hora){
 
         Operacao o = new Operacao();
-        boolean valido = true;
-
-//            if(!Toolbox.verificaLetrasENumeros(local)){
-//                o.addMensagem("O local precisa conter apenas letras e números.\n");
-//                valido = false;
-//            }
-//            if(!Toolbox.verificaNumeros(telefone, 9)){
-//                o.addMensagem("O telefone precisa conter apenas numeros (9).\n");
-//                valido = false;
-//            }
-
-        if(!valido){
+        Operacao o2 = new Operacao();
+        Operacao o3 = new Operacao();
+        Pessoa_Desaparecida denunciado ;
+        
+        Pessoas_DesaparecidasDAO daop = new Pessoas_DesaparecidasDAO();
+        o = daop.getPessoa(cpf);
+        if(o.isSucesso()){
+            if(o.getDado() == null){
+                o.addMensagem("Não existe pessoa desaparecida com esse CPF.");
+                o.setSucesso(false);
+                return o;
+            }
+        }
+        else{
             return o;
         }
+        denunciado = (Pessoa_Desaparecida) o.getDado();
 
-        DenunciasDAO dao = new DenunciasDAO();
+        DenunciasDAO daod = new DenunciasDAO();
+        LocalizacoesDAO daol = new LocalizacoesDAO();
         Denuncia d = new Denuncia(id, telefone, local);
 
-        o = dao.inserir(d);
+        o = daod.inserir(d);
+        
+        /** Caso consiga cadastrar uma denúncia, cadastra a localização referente à essa denúncia**/
+        if(o.isSucesso()){
+            o2 = cadastrarLocalizacao(denunciado.getId(), (int)o.getDado(), local, data, hora);
 
+            /** Caso consiga cadastrar a localização, atualiza a última localização na tabela de pessoas_desaparecidas**/
+            if(o2.isSucesso()){
+                o3 = atualizarLocalizacao(denunciado.getCPF(), (int)o2.getDado());
+                
+                if(!o3.isSucesso()){
+                    daod.remover((int) o.getDado());
+                    daol.remover((int) o2.getDado());
+                }
+            }
+            else{
+                daod.remover((int) o.getDado());
+            }
+        }
+        o.union(o2);
+        o.union(o3);
         return o;
 
     }
@@ -238,25 +274,13 @@ public class NegocioFacade {
     public static Operacao cadastrarLocalizacao(int id_pessoa, int id_denuncia, String local, String data, String hora){
 
         Operacao o = new Operacao();
-        boolean valido = true;
-
-//            if(!Toolbox.verificaLetrasENumeros(local)){
-//                o.addMensagem("O local precisa conter apenas letras e números.\n");
-//                valido = false;
-//            }
-//            if(!Toolbox.verificaNumeros(telefone, 9)){
-//                o.addMensagem("O telefone precisa conter apenas numeros (9).\n");
-//                valido = false;
-//            }
-
-        if(!valido){
-            return o;
-        }
 
         LocalizacoesDAO dao = new LocalizacoesDAO();
         Localizacao l = new Localizacao(id_pessoa, id_denuncia, local, data, hora);
 
         o = dao.inserir(l);
+
+
 
         return o;
     }
@@ -274,13 +298,13 @@ public class NegocioFacade {
 
         return o;
    }
-    public static Operacao atualizarLocalizacao(int id_pessoa, int id_localizacao){
+    public static Operacao atualizarLocalizacao(String cpf, int id_localizacao){
 
-        Operacao o = new Operacao();
-
+        Operacao o;
+        
         Pessoas_DesaparecidasDAO dao = new Pessoas_DesaparecidasDAO();
 
-        o = dao.atualizar(id_pessoa, id_localizacao);
+        o = dao.atualizar(cpf, id_localizacao);
 
         return o;
     }

@@ -35,9 +35,7 @@ public class LocalizacoesDAO {
                 id = rs.getInt("id");
             }
             o.setDado(id);
-
-            o.setSucesso(true);
-            o.addMensagem("Sucesso ao inserir uma nova localização no banco de dados.\n");
+            o.setSucesso(true);    
             
         } catch (SQLException ex) {
             o.addMensagem("Erro ao inserir uma nova localização do banco de dados.\n");

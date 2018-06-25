@@ -102,6 +102,37 @@ public class UsuariosDAO {
         
     }
     
+    public Operacao getUsuario(String login){
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+
+        Operacao o = new Operacao();
+
+        try{
+            Usuario u = new Usuario();
+            st = c.prepareStatement("SELECT * FROM Usuarios WHERE login = ?");
+            st.setString(1, login);
+            
+            rs = st.executeQuery();
+            
+            if(rs.next()){
+                u.setId(rs.getInt("id"));
+                u.setLogin(rs.getString("login"));
+                u.setSenha(rs.getString("senha"));
+                u.setNome(rs.getString("nome"));
+                u.setTipo(rs.getInt("tipo"));
+            }
+            o.setDado(u);
+            o.setSucesso(true);
+                        
+        }catch(SQLException ex){
+            o.addMensagem("Falha ao buscar na tabela Usuarios.");
+        }
+        Conexao.encerrarConexao(c, st, rs);
+        return o;
+        
+    }
     
     public Operacao listar(){
         Connection c = Conexao.estabelecerConexao();

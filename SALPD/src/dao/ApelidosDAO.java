@@ -59,7 +59,7 @@ public class ApelidosDAO {
         return o;
     }
      
-     public Operacao listar(int id_pessoa){
+     public Operacao listar(String cpf){
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null; 
         ResultSet rs = null;
@@ -69,8 +69,8 @@ public class ApelidosDAO {
         
         try{
             apelidos = new ArrayList<>();
-            st = c.prepareStatement("SELECT * FROM Apelidos WHERE id_pessoa = ?");
-            st.setInt(1, id_pessoa);
+            st = c.prepareStatement("SELECT * FROM Apelidos a JOIN Pessoas_Desaparecidas p ON a.id_pessoa = p.id AND p.cpf = ?");
+            st.setString(1, cpf);
             
             rs = st.executeQuery();
             

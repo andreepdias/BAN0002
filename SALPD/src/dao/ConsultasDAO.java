@@ -55,7 +55,7 @@ public class ConsultasDAO {
         return o;
     }
     
-    public Operacao findTipoUsuario(String login){
+    public Operacao nomeTipoUsuario(String login){
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -64,7 +64,7 @@ public class ConsultasDAO {
         String nomeTipo = null;
         
         try{
-            st = c.prepareStatement("SELECT nome FROM Usuarios u JOIN Usuario_Tipos t ON (u.tipo = t.id AND u.login = ?)");
+            st = c.prepareStatement("SELECT t.nome FROM Usuarios u JOIN Usuario_Tipos t ON (u.tipo = t.id AND u.login = ?)");
             st.setString(1, login);
             rs = st.executeQuery();
             

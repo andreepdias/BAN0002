@@ -31,30 +31,52 @@ public class Main {
     
     private static void menuLogin(){
         String login, senha;
+        int opcao = 0;
         Operacao o = new Operacao();
 
-        while(!o.isSucesso()){
+        while(!o.isSucesso() && opcao != 1 && opcao != 2){
             Toolbox.limpaTela();
             System.out.println("Sistema de Apoio a Localização de Pessoas Desparecidas");
-            System.out.println("\nÁrea de Login:\n");
-            System.out.print("Usuário: ");
-            login = input.nextLine(); 
-            System.out.print("Senha: ");
-            senha = input.nextLine();
+            System.out.println("O que você deseja fazer?");
+            System.out.println("\t1 - Fazer login");
+            System.out.println("\t2 - Entrar como Informante Anônimo");
+            System.out.print("$: ");
+            opcao = Integer.parseInt(input.nextLine());
+            Toolbox.limpaTela();
+           
+            switch(opcao)
+            {
+                case 1:
+                    System.out.println("\nÁrea de Login:\n");
+                    System.out.print("Usuário: ");
+                    login = input.nextLine(); 
+                    System.out.print("Senha: ");
+                    senha = input.nextLine();
 
-            o = NegocioFacade.login(login, senha);
-            Main.setUsuario((Usuario) o.getDado());
+                    o = NegocioFacade.login(login, senha);
+                    Main.setUsuario((Usuario) o.getDado());
 
-            System.out.println(o.getMensagem());
-          //  Toolbox.aguarda();
-        }
-        switch(usuario.getTipo()){
-            case 5:
-                menuAdministrador();
-                break;
-            case 4:
-                menuGestor();
-                break;
+                    System.out.println(o.getMensagem());
+                    switch(usuario.getTipo()){
+                        case 5:
+                            menuAdministrador();
+                            break;
+                        case 4:
+                            menuGestor();
+                            break;
+                        case 3:
+                            menuAgente();
+                            break;
+                        case 2:
+                            menuInformante();
+                            break;
+                    } 
+                    break;
+                case 2:
+                    //Main.setUsuario(); //Precisa de um usuário anonimo pra colocar aqui
+                    break;
+                    
+            }
         }
     }
     
@@ -98,7 +120,7 @@ public class Main {
                     menuInserirPessoaDesparecida();
                     break;
                 case 5:
-                    menuListarPessoasDesparecidas();
+                    menuListarPessoasDesaparecidas();
                     break;
                 case 6:
                     menuRemoverPessoaDesparecida();
@@ -172,7 +194,7 @@ public class Main {
                     menuInserirPessoaDesparecida();
                     break;
                 case 5:
-                    menuListarPessoasDesparecidas();
+                    menuListarPessoasDesaparecidas();
                     break;
                 case 6:
                     menuRemoverPessoaDesparecida();
@@ -200,6 +222,106 @@ public class Main {
                     break;
                 case 14:
                     menuVisoes();
+                    break;
+            }
+            
+        }while(opcao != 0);  
+    }
+    
+    private static void menuAgente(){
+       int opcao;
+        
+        do{
+            Toolbox.limpaTela();
+            System.out.println("Menu de Agente - SALPD\n");
+            System.out.println("O que você deseja fazer?");
+            System.out.println("\t1 - Inserir novo usuário");
+            System.out.println("\t2 - Listar todos os usuários");
+            System.out.println("\t3 - Remover um usuário\n");
+            System.out.println("\t4 - Cadastrar pessoa desaparecida");
+            System.out.println("\t5 - Listar pessoas desaparecidas");
+            System.out.println("\t6 - Remover pessoas desaparecidas\n");
+            System.out.println("\t7 - Cadastrar apelido");
+            System.out.println("\t8 - Listar apelidos");
+            System.out.println("\t9 - Remover apelido\n");
+            System.out.println("\t10 - Cadastrar denúncia");
+            System.out.println("\t11 - Listar denúncias");
+            System.out.println("\t12 - Remover denúncia\n");
+            System.out.println("\t13 - Listar Localizações\n");
+            System.out.println("\t14 - Buscar por visões\n");
+            System.out.println("\t0 - Sair\n");
+            System.out.printf("$: ");
+        
+            opcao = Integer.parseInt(input.nextLine());
+            
+            switch(opcao){
+                case 1:
+                    menuInserirUsuario();
+                    break;
+                case 2:
+                    menuListarUsuarios();
+                    break;
+                case 3:
+                    menuRemoverUsuario();
+                    break;
+                case 4:
+                    menuInserirPessoaDesparecida();
+                    break;
+                case 5:
+                    menuListarPessoasDesaparecidas();
+                    break;
+                case 6:
+                    menuRemoverPessoaDesparecida();
+                    break;
+                case 7:
+                    menuInserirApelido();
+                    break;
+                case 8:
+                    menuListarApelidos();
+                    break;
+                case 9:
+                    menuRemoverApelido();
+                    break;
+                case 10:
+                    menuInserirDenuncia();
+                    break;
+                case 11:
+                    menuListarDenuncias();
+                    break;
+                case 12:
+                    menuRemoverDenuncia();
+                    break;
+                case 13:
+                    menuListarLocalizacoes();
+                    break;
+                case 14:
+                    menuVisoes();
+                    break;
+            }
+            
+        }while(opcao != 0);  
+    }
+    
+    private static void menuInformante(){
+       int opcao;
+        
+        do{
+            Toolbox.limpaTela();
+            System.out.println("Menu de Informante - SALPD\n");
+            System.out.println("O que você deseja fazer?");
+            System.out.println("\t1 - Listar pessoas desaparecidas");
+            System.out.println("\t2 - Cadastrar denúncia");
+            System.out.println("\t0 - Sair\n");
+            System.out.printf("$: ");
+        
+            opcao = Integer.parseInt(input.nextLine());
+            
+            switch(opcao){
+                case 1:
+                    menuListarPessoasDesaparecidas();
+                    break;
+                case 2:
+                    menuInserirDenuncia();
                     break;
             }
             
@@ -279,20 +401,20 @@ public class Main {
         Toolbox.aguarda();
     }
     private static void menuRemoverPessoaDesparecida(){
-        int id;
+        String cpf;
         Operacao o;
         
         Toolbox.limpaTela();
         System.out.println("Remoção de pessoa desaparecida:\n");
-        System.out.printf("Id: ");
-        id = Integer.parseInt(input.nextLine());
+        System.out.printf("CPF: ");
+        cpf = input.nextLine();
 
-        o = NegocioFacade.removerPessoaDesaparecida(id);
+        o = NegocioFacade.removerPessoaDesaparecida(cpf);
 
         System.out.println(o.getMensagem());
         Toolbox.aguarda();
     }
-    private static void menuListarPessoasDesparecidas(){
+    private static void menuListarPessoasDesaparecidas(){
         Operacao o;
         
         Toolbox.limpaTela();
@@ -346,14 +468,14 @@ public class Main {
     }
     private static void menuListarApelidos(){
         Operacao o;
-        int id_pessoa;
+        String cpf;
         
         Toolbox.limpaTela();
         System.out.println("Lista de apelidos de uma pessoa desaparecida:\n");
         System.out.printf("ID da pessoa des.: ");
-        id_pessoa = Integer.parseInt(input.nextLine());
+        cpf = input.nextLine();
 
-        o = NegocioFacade.listarApelidos(id_pessoa);
+        o = NegocioFacade.listarApelidos(cpf);
         System.out.println(o.getMensagem());
 
         if(o.isSucesso()){
@@ -367,8 +489,8 @@ public class Main {
     }
     
     private static void menuInserirDenuncia(){
-        String telefone, local_ligacao, local, data, hora;
-        int id_usuario, id_pessoa;
+        String telefone, local_ligacao, local, data, hora, cpf;
+        int id_usuario;
         Operacao o;
         
         Toolbox.limpaTela();
@@ -380,32 +502,19 @@ public class Main {
         local_ligacao = input.nextLine();
         
         System.out.println("\nDados da pessoa desaparecida:");
-        System.out.printf("ID: ");
-        id_pessoa = Integer.parseInt(input.nextLine());
+        System.out.printf("CPF: ");
+        cpf = input.nextLine();
         System.out.printf("Local: ");
         local = input.nextLine();
-        System.out.printf("Data: ");
+        System.out.printf("Data (AAAA-MM-DD): ");
         data = input.nextLine();
-        System.out.printf("Hora: ");
+        System.out.printf("Hora (HH:MM:SS): ");
         hora = input.nextLine();
 
-        o = NegocioFacade.cadastrarDenuncia(telefone, local_ligacao, getUsuario().getId());
+        o = NegocioFacade.cadastrarDenuncia(cpf, telefone, local_ligacao, getUsuario().getId(), data, hora);
+               
         
-//        System.out.println(o.getMensagem());
-        
-        /** Caso consiga cadastrar uma denúncia, cadastra a localização referente à essa denúncia**/
-        if(o.isSucesso()){
-            o = NegocioFacade.cadastrarLocalizacao(id_pessoa, (int)o.getDado(), local, data, hora);
-            
-            /** Caso consiga cadastrar a localização, atualiza a última localização na tabela de pessoas_desaparecidas**/
-            if(o.isSucesso()){
-                o = NegocioFacade.atualizarLocalizacao(id_pessoa, (int)o.getDado());
-                
-                System.out.println(o.getMensagem());
-            }
-            
-        }else{
-//            o = NegocioFacade.removerDenuncia((int)o.getDado());
+        if(!o.isSucesso()){
             System.out.println(o.getMensagem());
         }
         Toolbox.aguarda();

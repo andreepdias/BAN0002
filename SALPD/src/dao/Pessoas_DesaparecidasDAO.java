@@ -41,15 +41,15 @@ public class Pessoas_DesaparecidasDAO {
         return o;
     }
     
-     public Operacao remover(int id){
+     public Operacao remover(String cpf){
         
         Operacao o = new Operacao();
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         
         try {
-            st = c.prepareStatement("DELETE FROM pessoas_desaparecidas WHERE id = ?");
-            st.setInt(1, id);
+            st = c.prepareStatement("DELETE FROM pessoas_desaparecidas WHERE cpf = ?");
+            st.setString(1, cpf);
             
             st.executeUpdate();
             o.addMensagem("Sucesso ao remover pessoa desaparecida.\n");
@@ -99,24 +99,58 @@ public class Pessoas_DesaparecidasDAO {
         return o;
     }
      
-     public Operacao atualizar(int id_pessoa, int id_localizacao){
+    public Operacao getPessoa(String cpf){
+        Connection c = Conexao.estabelecerConexao();
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+
+        Operacao o = new Operacao();
+
+        try{
+            st = c.prepareStatement("SELECT * FROM Pessoas_Desaparecidas WHERE cpf = ?");
+            st.setString(1, cpf);
+            Pessoa_Desaparecida p = new Pessoa_Desaparecida();
+
+            rs = st.executeQuery();
+
+            if(rs.next()){
+                p.setId(rs.getInt("id"));
+                p.setCPF(rs.getString("cpf"));
+                p.setRG(rs.getString("rg"));
+                p.setNome(rs.getString("nome"));
+                p.setUltimo_local(rs.getInt("ultimo_local"));
+                p.setInserido_por(rs.getInt("inserido_por"));
+                p.setAtualizado_por(rs.getInt("atualizado_por"));
+                o.setDado(p);
+            }
+            o.setSucesso(true);
+
+
+        }catch(SQLException ex){
+            o.addMensagem("Falha ao buscar na tabela Pessoas_Desaparecidas.");
+        }
+        Conexao.encerrarConexao(c, st, rs);
+        return o;
+
+    }
+     
+     public Operacao atualizar(String cpf, int id_localizacao){
 
         Connection c = Conexao.estabelecerConexao();
         PreparedStatement st = null;
         Operacao o = new Operacao();
 
         try {
-            st = c.prepareStatement("UPDATE Pessoas_Desaparecidas SET ultimo_local = ? WHERE id = ?");
+            st = c.prepareStatement("UPDATE Pessoas_Desaparecidas SET ultimo_local = ? WHERE cpf = ?");
             st.setInt(1, id_localizacao);
-            st.setInt(2, id_pessoa);
+            st.setString(2, cpf);
 
             st.executeUpdate();
 
             o.setSucesso(true);
-            o.addMensagem("Sucesso ao atualizar pessoa desaparecida no banco de dados.\n");
             
         } catch (SQLException ex) {
-            o.addMensagem("Erro ao atualizar pessoa desaparecida do banco de dados.\n");
+            o.addMensagem("Erro ao atualizar pessoa desaparecida no banco de dados.\n");
         }
         Conexao.encerrarConexao(c, st);
 
